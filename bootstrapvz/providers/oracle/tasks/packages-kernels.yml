@@ -1,5 +1,8 @@
 ---
 # This is a mapping of Debian release codenames to processor architectures to kernel packages
+wheezy:
+  amd64: linux-image-amd64
+  i386: linux-image-686
 jessie:
   amd64: linux-image-amd64
   i386: linux-image-686-pae

@@ -15,6 +15,11 @@ properties:
             type: string
             pattern: (^arn:aws:iam::\d*:user/\w.*$)|(^\d{4}-\d{4}-\d{4}$)
       bucket: {type: string}
+      acl: 
+        enum:
+        - public-read
+        - aws-exec-read
+        - ec2-bundle-read
       region: {$ref: '#/definitions/aws-region'}
     required:
     - bucket

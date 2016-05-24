@@ -65,13 +65,16 @@ class UploadImage(Task):
 		else:
 			s3_url = 'https://s3-{region}.amazonaws.com/'.format(region=info._ec2['region'])
 		info._ec2['manifest_location'] = info.manifest.provider['bucket'] + '/' + info._ec2['ami_name'] + '.manifest.xml'
+		acl = 'ec2-bundle-read'
+		if 'acl' in info.manifest.provider:
+			acl = info.manifest.provider['acl']
 		log_check_call(['euca-upload-bundle',
+		                '--acl', acl,
 		                '--bucket', info.manifest.provider['bucket'],
 		                '--manifest', manifest_file,
 		                '--access-key', info.credentials['access-key'],
 		                '--secret-key', info.credentials['secret-key'],
-		                '--url', s3_url,
-		                '--region', info._ec2['region']])
+		                '--url', s3_url])
 
 
 class RemoveBundle(Task):

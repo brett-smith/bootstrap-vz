@@ -15,7 +15,9 @@ class CreateDpkgCfg(Task):
 
 	@classmethod
 	def run(cls, info):
-		os.makedirs(os.path.join(info.root, 'etc/dpkg/dpkg.cfg.d'))
+		dir = os.path.join(info.root, 'etc/dpkg/dpkg.cfg.d')
+		if not os.path.exists(dir):
+			os.makedirs(dir)
 
 
 class InitializeBootstrapFilterList(Task):

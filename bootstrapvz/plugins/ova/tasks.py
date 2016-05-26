@@ -132,7 +132,7 @@ class PackageOVA(Task):
 		attr(machine, 'MACAddress', mac_address)
 
 		[device_img] = machine.findall('./ovf:StorageControllers'
-		                               '/ovf:StorageController[@name="SATA Controller"]'
+		                               '/ovf:StorageController[1]'
 		                               '/ovf:AttachedDevice/ovf:Image', namespaces)
 		attr(device_img, 'uuid', '{' + str(volume_uuid) + '}')
 

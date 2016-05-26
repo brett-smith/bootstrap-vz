@@ -26,7 +26,6 @@
         <vssd:ElementName>Virtual Hardware Family</vssd:ElementName>
         <vssd:InstanceID>0</vssd:InstanceID>
         <vssd:VirtualSystemIdentifier>[OVANAME]</vssd:VirtualSystemIdentifier>
-        <vssd:VirtualSystemType>virtualbox-2.2</vssd:VirtualSystemType>
       </System>
       <Item>
         <rasd:Caption>1 virtual CPU</rasd:Caption>
@@ -45,15 +44,17 @@
         <rasd:ResourceType>4</rasd:ResourceType>
         <rasd:VirtualQuantity>1024</rasd:VirtualQuantity>
       </Item>
+      
       <Item>
-        <rasd:Address>0</rasd:Address>
-        <rasd:Caption>sataController0</rasd:Caption>
-        <rasd:Description>SATA Controller</rasd:Description>
-        <rasd:ElementName>sataController0</rasd:ElementName>
-        <rasd:InstanceID>5</rasd:InstanceID>
-        <rasd:ResourceSubType>AHCI</rasd:ResourceSubType>
-        <rasd:ResourceType>20</rasd:ResourceType>
+		<rasd:Address>0</rasd:Address>
+		<rasd:Caption>SCSIController</rasd:Caption>
+		<rasd:Description>SCSI Controller</rasd:Description>
+		<rasd:ElementName>SCSIController</rasd:ElementName>
+		<rasd:InstanceID>5</rasd:InstanceID>
+		<rasd:ResourceSubType>lsilogic</rasd:ResourceSubType>
+		<rasd:ResourceType>6</rasd:ResourceType>
       </Item>
+      
       <Item>
         <rasd:AutomaticAllocation>true</rasd:AutomaticAllocation>
         <rasd:Caption>Ethernet adapter on 'NAT'</rasd:Caption>
@@ -145,7 +146,7 @@
         <GuestProperties/>
       </Hardware>
       <StorageControllers>
-        <StorageController name="SATA Controller" type="AHCI" PortCount="1" useHostIOCache="false" Bootable="true" IDE0MasterEmulationPort="0" IDE0SlaveEmulationPort="1" IDE1MasterEmulationPort="2" IDE1SlaveEmulationPort="3">
+        <StorageController name="SCSI Controller" PortCount="1" useHostIOCache="false" Bootable="true">
           <AttachedDevice type="HardDisk" port="0" device="0">
             <Image uuid="{[DISK_UUID]}"/>
           </AttachedDevice>

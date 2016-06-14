@@ -1,0 +1,31 @@
+---
+$schema: http://json-schema.org/draft-04/schema#
+title: Hyper-V manifest
+type: object
+properties:
+  provider:
+    type: object
+    properties: {}
+  system:
+    type: object
+    properties:
+      bootloader:
+        type: string
+        enum:
+        - grub
+        - extlinux
+  volume:
+    type: object
+    properties:
+      backing:
+        enum:
+        - vhd
+      partitions:
+        type: object
+        properties:
+          type:
+            enum:
+            - none
+            - msdos
+            - gpt
+    required: [backing]

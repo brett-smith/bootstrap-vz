@@ -48,16 +48,9 @@ class PopulateLabels(Task):
 			for label, value in info.manifest.provider['labels'].items():
 				labels[label] = value.format(**info.manifest_vars)
 
-		# pipes.quote converts newlines into \n rather than just prefixing
-		# it with a backslash, so we need to escape manually
-		def escape(value):
-			value = value.replace('"', '\\"')
-			value = value.replace('\n', '\\\n')
-			value = '"' + value + '"'
-			return value
-		kv_pairs = [label + '=' + escape(value) for label, value in labels.items()]
-		# Add some nice newlines and indentation
-		info._docker['dockerfile'] += 'LABEL ' + ' \\\n      '.join(kv_pairs) + '\n'
+        from pipes import quote
+        for label, value in labels.items():
+            info._docker['dockerfile'].append('LABEL {}={}'.format(label, quote(value)))
 
 
 class AppendManifestDockerfile(Task):

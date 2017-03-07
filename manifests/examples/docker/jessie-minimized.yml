@@ -1,11 +1,18 @@
 ---
-name: debian-{system.release}-{system.architecture}-{%y}{%m}{%d}:latest
+name: debian-{system.release}-{system.architecture}:latest
 provider:
   name: docker
   labels:
-    description: Debian {system.release} {system.architecture}
-  dockerfile: >
-    CMD /bin/bash
+    summary: Debian {system.release} {system.architecture}
+    description: >
+      Minimized version of Debian jessie
+      without any manpages, additional documentation
+      or other language files.
+      Additional package installs:
+      inetutils-ping (dep: netbase) and iproute2
+    distribution-scope: public
+  dockerfile:
+    - CMD /bin/bash
 bootstrapper:
   workspace: /target
   variant: minbase
@@ -16,7 +23,10 @@ system:
   charmap: UTF-8
   locale: en_US
   timezone: UTC
-packages: {}
+packages:
+  install:
+    - inetutils-ping
+    - iproute2
 volume:
   backing: folder
   partitions:

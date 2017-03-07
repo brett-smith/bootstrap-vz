@@ -10,8 +10,10 @@ properties:
         type: string
         enum:
         - wheezy
-        - stable
+        - oldstable
         - jessie
+        - stable
+        - stretch
         - testing
         - sid
         - unstable
@@ -31,5 +33,14 @@ properties:
             type: array
             items: {type: string}
             uniqueItems: true
+          enable_modules:
+            type: object
+            properties:
+              cloud_init_modules:
+                type: array
+                properties:
+                  module: {type: string}
+                  position: {type: number}
+            additionalProperties: false
         required: [username]
         additionalProperties: false

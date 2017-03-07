@@ -14,3 +14,5 @@
 /.tox/
 /build-servers.yml
 /integration.html
+/.pydevproject
+/.project

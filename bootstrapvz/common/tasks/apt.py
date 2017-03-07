@@ -6,6 +6,37 @@ import logging
 import os
 
 
+class ValidateTrustedKeys(Task):
+    description = 'Validate apt trusted keys'
+    phase = phases.validation
+
+    @classmethod
+    def run(cls, info):
+        from bootstrapvz.common.tools import log_call
+
+        for i, key_path in enumerate(info.manifest.packages.get('trusted-keys', {})):
+            if not os.path.isfile(key_path):
+                info.manifest.validation_error('File not found: {}'.format(key_path),
+                                               ['packages', 'trusted-keys', i])
+
+            from tempfile import mkdtemp
+            from shutil import rmtree
+            tempdir = mkdtemp()
+
+            status, _, _ = log_call(
+                ['gpg', '--quiet',
+                 '--homedir', tempdir,
+                 '--keyring', key_path,
+                 '-k']
+            )
+
+            rmtree(tempdir)
+
+            if status != 0:
+                info.manifest.validation_error('Invalid GPG keyring: {}'.format(key_path),
+                                               ['packages', 'trusted-keys', i])
+
+
 class AddManifestSources(Task):
     description = 'Adding sources from the manifest'
     phase = phases.preparation
@@ -24,13 +55,13 @@ class AddDefaultSources(Task):
 
     @classmethod
     def run(cls, info):
-        from bootstrapvz.common.releases import sid
+        from bootstrapvz.common.releases import sid, wheezy
         include_src = info.manifest.packages.get('include-source-type', False)
         components = ' '.join(info.manifest.packages.get('components', ['main']))
         info.source_lists.add('main', 'deb     {apt_mirror} {system.release} ' + components)
         if include_src:
             info.source_lists.add('main', 'deb-src {apt_mirror} {system.release} ' + components)
-        if info.manifest.release != sid:
+        if info.manifest.release != sid and info.manifest.release >= wheezy:
             info.source_lists.add('main', 'deb     http://security.debian.org/  {system.release}/updates ' + components)
             if include_src:
                 info.source_lists.add('main', 'deb-src http://security.debian.org/  {system.release}/updates ' + components)
@@ -46,10 +77,13 @@ class AddBackports(Task):
 
     @classmethod
     def run(cls, info):
+        from bootstrapvz.common.releases import testing
         from bootstrapvz.common.releases import unstable
         if info.source_lists.target_exists('{system.release}-backports'):
             msg = ('{system.release}-backports target already exists').format(**info.manifest_vars)
             logging.getLogger(__name__).info(msg)
+        elif info.manifest.release == testing:
+            logging.getLogger(__name__).info('There are no backports for stretch/testing')
         elif info.manifest.release == unstable:
             logging.getLogger(__name__).info('There are no backports for sid/unstable')
         else:
@@ -144,11 +178,12 @@ class DisableDaemonAutostart(Task):
         with open(rc_policy_path, 'w') as rc_policy:
             rc_policy.write(('#!/bin/sh\n'
                              'exit 101'))
-        import stat
-        os.chmod(rc_policy_path,
-                 stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR |
-                 stat.S_IRGRP                | stat.S_IXGRP |
-                 stat.S_IROTH                | stat.S_IXOTH)
+        os.chmod(rc_policy_path, 0755)
+        initictl_path = os.path.join(info.root, 'sbin/initctl')
+        with open(initictl_path, 'w') as initctl:
+            initctl.write(('#!/bin/sh\n'
+                           'exit 0'))
+        os.chmod(initictl_path, 0755)
 
 
 class AptUpdate(Task):
@@ -223,3 +258,4 @@ class EnableDaemonAutostart(Task):
     @classmethod
     def run(cls, info):
         os.remove(os.path.join(info.root, 'usr/sbin/policy-rc.d'))
+        os.remove(os.path.join(info.root, 'sbin/initctl'))

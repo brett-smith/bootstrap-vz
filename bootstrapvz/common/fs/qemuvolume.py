@@ -38,11 +38,11 @@ class QEMUVolume(LoopbackVolume):
                        .format(max_part=nbd_max_part, num_partitions=num_partitions))
                 raise VolumeError(msg)
 
-	def _before_attach(self, e):
-		self._check_nbd_module()
-		self.loop_device_path = self._find_free_nbd_device()
-		log_check_call(['qemu-nbd', '--connect', self.loop_device_path, '-f', self.qemu_format, self.image_path])
-		self.device_path = self.loop_device_path
+    def _before_attach(self, e):
+        self._check_nbd_module()
+        self.loop_device_path = self._find_free_nbd_device()
+        log_check_call(['qemu-nbd', '--connect', self.loop_device_path, self.image_path])
+        self.device_path = self.loop_device_path
 
     def _before_detach(self, e):
         log_check_call(['qemu-nbd', '--disconnect', self.loop_device_path])

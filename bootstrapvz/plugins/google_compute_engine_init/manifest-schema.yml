@@ -1,0 +1,12 @@
+---
+$schema: http://json-schema.org/draft-04/schema#
+title: Google Compute Engine Init plugin manifest
+type: object
+properties:
+  plugins:
+    type: object
+    properties:
+      google_cloud_repo:
+        type: object
+        properties: {}
+        additionalProperties: false

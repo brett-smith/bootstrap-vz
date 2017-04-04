@@ -6,7 +6,7 @@ properties:
   plugins:
     type: object
     properties:
-      google_cloud_repo:
+      google_compute_engine_init:
         type: object
         properties: {}
         additionalProperties: false

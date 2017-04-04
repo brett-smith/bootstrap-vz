@@ -13,3 +13,6 @@ def resolve_tasks(taskset, manifest):
         taskset.add(tasks.InstallGoogleCloudRepoKeyringPackage)
         if manifest.plugins['google_cloud_repo'].get('cleanup_bootstrap_key', False):
             taskset.add(tasks.CleanupBootstrapRepoKey)
+    if manifest.plugins['google_cloud_repo'].get('enable_cloud_sdk', False):
+        taskset.add(tasks.AddGoogleCloudSDKRepo)
+        taskset.add(tasks.InstallGoogleCloudSDKPackage)

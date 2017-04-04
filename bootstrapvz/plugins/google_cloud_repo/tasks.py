@@ -30,6 +30,16 @@ class AddGoogleCloudRepoKeyringRepo(Task):
         info.source_lists.add('google-cloud', 'deb http://packages.cloud.google.com/apt google-cloud-packages-archive-keyring-{system.release} main')
 
 
+class AddGoogleCloudSDKRepo(Task):
+    description = 'Adding Google Cloud SDK repository.'
+    phase = phases.preparation
+    predecessors = [apt.AddManifestSources]
+
+    @classmethod
+    def run(cls, info):
+        info.source_lists.add('google-cloud-sdk', 'deb http://packages.cloud.google.com/apt cloud-sdk-{system.release} main')
+
+
 class InstallGoogleCloudRepoKeyringPackage(Task):
     description = 'Installing Google Cloud key package.'
     phase = phases.preparation
@@ -38,6 +48,16 @@ class InstallGoogleCloudRepoKeyringPackage(Task):
     @classmethod
     def run(cls, info):
         info.packages.add('google-cloud-packages-archive-keyring')
+
+
+class InstallGoogleCloudSDKPackage(Task):
+    description = 'Installing Google SDK package.'
+    phase = phases.preparation
+    successors = [packages.AddManifestPackages]
+
+    @classmethod
+    def run(cls, info):
+        info.packages.add('google-cloud-sdk')
 
 
 class CleanupBootstrapRepoKey(Task):

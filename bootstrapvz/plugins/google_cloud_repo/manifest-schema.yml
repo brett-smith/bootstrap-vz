@@ -11,4 +11,5 @@ properties:
         properties:
           cleanup_bootstrap_key: {type: boolean}
           enable_keyring_repo: {type: boolean}
+          enable_cloud_sdk: {type: boolean}
         additionalProperties: false

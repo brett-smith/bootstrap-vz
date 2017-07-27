@@ -7,6 +7,7 @@ from bootstrapvz.common.tasks import initd
 from bootstrapvz.common.tasks import ssh
 from bootstrapvz.common.tasks import apt
 from bootstrapvz.common.tasks import grub
+from bootstrapvz.common.tasks import image
 
 
 def validate_manifest(data, validator, error):

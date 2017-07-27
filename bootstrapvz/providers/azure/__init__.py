@@ -1,7 +1,7 @@
 from bootstrapvz.common import task_groups
 import tasks.packages
 import tasks.boot
-from bootstrapvz.common.tasks import image
+import tasks.image
 from bootstrapvz.common.tasks import loopback
 from bootstrapvz.common.tasks import initd
 from bootstrapvz.common.tasks import ssh
@@ -21,6 +21,7 @@ def resolve_tasks(taskset, manifest):
                     loopback.AddRequiredCommands,
                     loopback.Create,
                     image.MoveImage,
+                    tasks.image.FixVHD,
                     initd.InstallInitScripts,
                     ssh.AddOpenSSHPackage,
                     ssh.ShredHostkeys,

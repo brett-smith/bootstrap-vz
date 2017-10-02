@@ -27,7 +27,7 @@ class AddGoogleCloudRepoKeyringRepo(Task):
 
     @classmethod
     def run(cls, info):
-        info.source_lists.add('google-cloud', 'deb http://packages.cloud.google.com/apt ' % info.manifest.plugins['google_cloud_repo'].get('repository_name', 'google-cloud-packages-archive-keyring-{system.release}') % ' main')
+        info.source_lists.add('google-cloud', 'deb http://packages.cloud.google.com/apt %s main' % info.manifest.plugins['google_cloud_repo'].get('repository_name', 'google-cloud-packages-archive-keyring-{system.release}') )
 
 
 class InstallGoogleCloudRepoKeyringPackage(Task):

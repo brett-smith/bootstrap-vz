@@ -11,5 +11,4 @@ properties:
         properties:
           cleanup_bootstrap_key: {type: boolean}
           enable_keyring_repo: {type: boolean}
-          repository_name: {type: string}
         additionalProperties: false

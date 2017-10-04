@@ -8,5 +8,6 @@ properties:
     properties:
       google_compute_engine_init:
         type: object
-        properties: {}
+        properties:
+          repository_suffix: {type: string}
         additionalProperties: false

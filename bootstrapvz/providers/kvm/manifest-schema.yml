@@ -32,7 +32,12 @@ properties:
     properties:
       backing:
         type: string
-        enum: [raw]
+        enum:
+        - qcow2
+        - raw
+        - lvm
+      logicalvolume: {type: string}
+      volumegroup: {type: string}
       partitions:
         type: object
         properties:

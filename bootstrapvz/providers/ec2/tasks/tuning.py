@@ -17,20 +17,6 @@ class TuneSystem(Task):
         os.chmod(sysctl_dst, 0644)
 
 
-class SetCloudInitMountOptions(Task):
-    description = 'Setting cloud-init default mount options'
-    phase = phases.system_modification
-
-    @classmethod
-    def run(cls, info):
-        cloud_init_src = os.path.join(assets, 'cloud-init/debian_cloud.cfg')
-        from bootstrapvz.common.tools import log_check_call
-        log_check_call(['chroot', info.root, 'mkdir', '-p', 'etc/cloud/cloud.cfg.d'])
-        cloud_init_dst = os.path.join(info.root, 'etc/cloud/cloud.cfg.d/01_debian_cloud.cfg')
-        copy(cloud_init_src, cloud_init_dst)
-        os.chmod(cloud_init_dst, 0644)
-
-
 class BlackListModules(Task):
     description = 'Blacklisting unused kernel modules'
     phase = phases.system_modification

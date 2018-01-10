@@ -9,21 +9,27 @@ properties:
       ansible:
         type: object
         properties:
-          extra_vars: {type: string}
-          tags: {type: string}
-          skip_tags: {type: string}
+          extra_vars:
+            type: object
+            minItems: 1
+          tags:
+            type: array
+            items: {type: string}
+            minItems: 1
+          skip_tags:
+            type: array
+            items: {type: string}
+            minItems: 1
           opt_flags:
             type: array
-            flag: {type: string}
+            items: {type: string}
             minItems: 1
-          hosts:
+          groups:
             type: array
             host: {type: string}
             minItems: 1
-          playbook: {$ref: '#/definitions/absolute_path'}
+          playbook:
+            type: string
+            pattern: ^[^\0]+$
         required: [playbook]
         additionalProperties: false
-definitions:
-  absolute_path:
-    pattern: ^/[^\0]+$
-    type: string

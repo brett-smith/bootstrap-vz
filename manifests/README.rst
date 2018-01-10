@@ -21,6 +21,10 @@ setting. Not all settings support this though, to see whether embedding
 a manifest variable in a setting is possible, look for the
 ``manifest vars`` label.
 
+To insert a literal ``{foo}`` use double braces, that is ``{{foo}}``.
+For example in a shell command where you may want to use the
+expression ``${foo}``, use ``${{foo}}`` instead.
+
 Sections
 --------
 
@@ -196,6 +200,9 @@ variety of sources.
 -  ``mirror``: The default aptitude mirror.
    ``optional``
    Default: ``http://deb.debian.org/debian/``
+-  ``security``: The default security mirror.
+   ``optional``
+   Default:  ``http://security.debian.org/``
 -  ``sources``: A map of additional sources that should be added to
    the aptitude sources list. The key becomes the filename in
    ``/etc/apt/sources.list.d/`` (with ``.list`` appended to it), except
@@ -206,8 +213,8 @@ variety of sources.
    default apt sources. For example ``contrib`` or ``non-free``
    ``optional``
    Default: ``['main']``
--  ``trusted-keys``: List of paths to ``.gpg`` keyrings that should
-   be added to the aptitude keyring of trusted signatures for
+-  ``trusted-keys``: List of paths (relative to the manifest) to ``.gpg`` keyrings
+   that should be added to the aptitude keyring of trusted signatures for
    repositories.
    ``optional``
 -  ``apt.conf.d``: A map of ``apt.conf(5)`` configuration snippets.
@@ -239,6 +246,7 @@ Example:
         - puppet
       install_standard: true
       mirror: http://cloudfront.debian.net/debian
+      security: http://security.debian.org/
       sources:
         puppet:
           - deb http://apt.puppetlabs.com wheezy main dependencies
@@ -276,7 +284,7 @@ boot, root and swap.
 
 -  ``backing``: Specifies the volume backing. This setting is very
    provider specific.
-   Valid values: ``ebs``, ``s3``, ``vmdk``, ``vdi``, ``raw``
+   Valid values: ``ebs``, ``s3``, ``vmdk``, ``vdi``, ``raw``, ``qcow2``, ``lvm``
    ``required``
 -  ``partitions``: A map of the partitions that should be created on
    the volume.
@@ -303,7 +311,7 @@ boot, root and swap.
    -  ``{device_path}``: The device path of the partition.
    -  ``{size}``: The size of the partition.
    -  ``{mount_opts}``: Options to mount the partition with. This optional
-      setting overwrites the default option list bootstrap-vz would 
+      setting overwrites the default option list bootstrap-vz would
       normally use to mount the partiton (defaults). The List is specified
       as a string array where each option/argument is an item in that array.
       ``optional`` Here some examples:
@@ -312,10 +320,10 @@ boot, root and swap.
    -  ``noexec``
    -  ``journal_ioprio=3``
 
-   The default command used by boostrap-vz is
+   The default command used by bootstrap-vz is
    ``['mkfs.{fs}', '{device_path}']``.
 
-   -  ``boot``: Configuration of the boot partition. All settings equal 
+   -  ``boot``: Configuration of the boot partition. All settings equal
       those of the root partition.
       ``optional``
    -  ``swap``: Configuration of the swap partition. Since the swap

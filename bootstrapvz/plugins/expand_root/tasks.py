@@ -1,7 +1,7 @@
 from bootstrapvz.base import Task
 from bootstrapvz.common import phases
+from bootstrapvz.common.tasks import apt
 from bootstrapvz.common.tasks import initd
-from bootstrapvz.common.tasks import packages
 from bootstrapvz.common.tools import log_check_call
 from bootstrapvz.common.tools import rel_path
 from bootstrapvz.common.tools import sed_i
@@ -14,7 +14,7 @@ ASSETS_DIR = rel_path(__file__, 'assets')
 class InstallGrowpart(Task):
     description = 'Adding necessary packages for growpart.'
     phase = phases.preparation
-    successors = [packages.AddManifestPackages]
+    predecessors = [apt.AddBackports]
 
     @classmethod
     def run(cls, info):
@@ -38,7 +38,7 @@ class InstallExpandRootScripts(Task):
         expand_root_service = os.path.join(ASSETS_DIR, 'expand-root.service')
 
         expand_root_script_dest = os.path.join(info.root, 'usr/bin/expand-root.sh')
-        expand_root_service_dest = os.path.join(info.root, 'lib/systemd/system/expand-root.service')
+        expand_root_service_dest = os.path.join(info.root, 'etc/systemd/system/expand-root.service')
 
         filesystem_type = info.manifest.plugins['expand_root'].get('filesystem_type')
         root_device = info.manifest.plugins['expand_root'].get('root_device')

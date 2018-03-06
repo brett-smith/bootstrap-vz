@@ -18,6 +18,7 @@ class VirtualHardDisk(QEMUVolume):
         # https://serverfault.com/questions/770378/problems-preparing-a-disk-image-for-upload-to-azure
         # Note, this doesn't seem to work if you try and create with the force_size option, it must be in convert
         log_check_call(['qemu-img', 'convert', '-f', 'raw', '-O', self.qemu_format, '-o', 'subformat=fixed,force_size', self.image_path + '.tmp', self.image_path])
+        log_check_call(['rm', self.image_path + '.tmp'])
 
     def get_uuid(self):
         if not hasattr(self, 'uuid'):

@@ -46,7 +46,7 @@ class FixVHD(Task):
         sizemb = int(((bytes / mb) + 1) *mb)
 
         # 3. Resize the RAW image. Additional options are added for qemu 2.6+
-        log.info('Resizing RAW format image for alignment (' + str(sizemb) + 'MiB)')
+        log.info('Resizing RAW format image for alignment (' + str(sizemb) + ' bytes)')
         log_check_call(['qemu-img', 'resize', '-f', 'raw', destination, str(sizemb)])
 
         format_opts = 'subformat=fixed'

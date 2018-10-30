@@ -32,7 +32,7 @@ class Waagent(Task):
         from bootstrapvz.common.tools import log_check_call
         import os
         waagent_version = info.manifest.provider['waagent']['version']
-        waagent_file = 'WALinuxAgent-' + waagent_version + '.tar.gz'
+        waagent_file = waagent_version + '.tar.gz'
         waagent_url = 'https://github.com/Azure/WALinuxAgent/archive/' + waagent_file
         log_check_call(['wget', '-P', info.root, waagent_url])
         waagent_directory = os.path.join(info.root, 'root')

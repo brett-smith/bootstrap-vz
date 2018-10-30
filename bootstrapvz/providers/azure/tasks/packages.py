@@ -38,7 +38,7 @@ class Waagent(Task):
         waagent_directory = os.path.join(info.root, 'root')
         log_check_call(['tar', 'xaf', os.path.join(info.root, waagent_file), '-C', waagent_directory])
         os.remove(os.path.join(info.root, waagent_file))
-        waagent_script = '/root/WALinuxAgent-WALinuxAgent-' + waagent_version + '/bin/waagent'
+        waagent_script = '/root/WALinuxAgent-' + waagent_version + '/bin/waagent'
         log_check_call(['chroot', info.root, 'cp', waagent_script, '/usr/sbin/waagent'])
         log_check_call(['chroot', info.root, 'chmod', '755', '/usr/sbin/waagent'])
         log_check_call(['chroot', info.root, 'waagent', '-install'])

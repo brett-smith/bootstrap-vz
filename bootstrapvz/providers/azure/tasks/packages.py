@@ -41,7 +41,7 @@ class Waagent(Task):
         waagent_script = '/root/WALinuxAgent-' + waagent_version + '/bin/waagent'
         log_check_call(['chroot', info.root, 'cp', waagent_script, '/usr/sbin/waagent'])
         log_check_call(['chroot', info.root, 'chmod', '755', '/usr/sbin/waagent'])
-        log_check_call(['chroot', info.root, 'waagent', '-install'])
+        log_check_call(['chroot', info.root, 'python', 'setup.py', 'install', '--register-service'])
         if info.manifest.provider['waagent'].get('conf', False):
             if os.path.isfile(info.manifest.provider['waagent']['conf']):
                 log_check_call(['cp', info.manifest.provider['waagent']['conf'],

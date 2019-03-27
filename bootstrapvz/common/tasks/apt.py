@@ -63,7 +63,7 @@ class AddDefaultSources(Task):
         info.source_lists.add('main', 'deb     {apt_mirror} {system.release} ' + components)
         if include_src:
             info.source_lists.add('main', 'deb-src {apt_mirror} {system.release} ' + components)
-        if info.manifest.release != sid and info.manifest.release >= wheezy:
+        if info.manifest.release != sid and info.manifest.release >= stretch:
             info.source_lists.add('main', 'deb     {apt_security} {system.release}/updates ' + components)
             if include_src:
                 info.source_lists.add('main', 'deb-src {apt_security} {system.release}/updates ' + components)
@@ -115,6 +115,7 @@ class InstallTrustedKeys(Task):
             key_name = os.path.basename(key_path)
             destination = os.path.join(info.root, 'etc/apt/trusted.gpg.d', key_name)
             copy(key_path, destination)
+            os.chmod(destination, 0o644)
 
 
 class WriteConfiguration(Task):

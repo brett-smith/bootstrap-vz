@@ -150,7 +150,8 @@ class PackageBox(Task):
 
     @classmethod
     def write_ovf(cls, info, destination, mac_address, disk_name):
-        namespaces = {'ovf':     'http://schemas.dmtf.org/ovf/envelope/1',
+        namespaces = {'':        'http://schemas.dmtf.org/ovf/envelope/1',
+                      'ovf':     'http://schemas.dmtf.org/ovf/envelope/1',
                       'rasd':    'http://schemas.dmtf.org/wbem/wscim/1/cim-schema/2/CIM_ResourceAllocationSettingData',
                       'vssd':    'http://schemas.dmtf.org/wbem/wscim/1/cim-schema/2/CIM_VirtualSystemSettingData',
                       'xsi':     'http://www.w3.org/2001/XMLSchema-instance',

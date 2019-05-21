@@ -190,8 +190,8 @@ class InitGrubConfig(Task):
             # Each module will be loaded as early as possible, at the start of grub.cfg.
             'GRUB_PRELOAD_MODULES': [],
 
-            # If this option is unset or set to ‘menu’, then GRUB will display the menu and 
-            # then wait for the timeout set by ‘GRUB_TIMEOUT’ to expire before booting the default 
+            # If this option is unset or set to 'menu', then GRUB will display the menu and 
+            # then wait for the timeout set by 'GRUB_TIMEOUT' to expire before booting the default 
             # entry. Pressing a key interrupts the timeout. 
             'GRUB_TIMEOUT_STYLE' : 'countdown'
         }

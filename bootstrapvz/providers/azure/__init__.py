@@ -29,7 +29,6 @@ def resolve_tasks(taskset, manifest):
                     ssh.AddSSHKeyGeneration,
                     tasks.packages.Waagent,
                     tasks.boot.ConfigureGrub,
-                    tasks.boot.PatchUdev,
                     ])
     taskset.discard(grub.SetGrubConsolOutputDeviceToSerial)
 

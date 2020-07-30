@@ -30,26 +30,4 @@ class Waagent(Task):
 
     @classmethod
     def run(cls, info):
-        from bootstrapvz.common.tools import log_check_call
-        import os
-        waagent_version = info.manifest.provider['waagent']['version']
-        waagent_file = 'v' + waagent_version + '.tar.gz'
-        waagent_url = 'https://github.com/Azure/WALinuxAgent/archive/' + waagent_file
-        log_check_call(['wget', '-P', info.root, waagent_url])
-        waagent_directory = os.path.join(info.root, 'root')
-        log_check_call(['tar', 'xaf', os.path.join(info.root, waagent_file), '-C', waagent_directory])
-        os.remove(os.path.join(info.root, waagent_file))
-        waagent_script = '/root/WALinuxAgent-' + waagent_version + '/bin/waagent'
-        log_check_call(['chroot', info.root, 'cp', waagent_script, '/usr/sbin/waagent'])
-        log_check_call(['chroot', info.root, 'chmod', '755', '/usr/sbin/waagent'])
-        log_check_call(['chroot', info.root, 'python', '/root/WALinuxAgent-' + waagent_version + '/setup.py', 'install', '--register-service'])
-        if info.manifest.provider['waagent'].get('conf', False):
-            if os.path.isfile(info.manifest.provider['waagent']['conf']):
-                log_check_call(['cp', info.manifest.provider['waagent']['conf'],
-                                os.path.join(info.root, 'etc/waagent.conf')])
-
-        # The Azure Linux agent uses 'useradd' to add users, but SHELL
-        # is set to /bin/sh by default. Set this to /bin/bash instead.
-        from bootstrapvz.common.tools import sed_i
-        useradd_config = os.path.join(info.root, 'etc/default/useradd')
-        sed_i(useradd_config, r'^(SHELL=.*)', r'SHELL=/bin/bash')
+        info.packages.add('waagent')

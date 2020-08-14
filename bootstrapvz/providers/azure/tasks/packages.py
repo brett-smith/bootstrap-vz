@@ -15,6 +15,8 @@ class DefaultPackages(Task):
         info.packages.add('python-setuptools')
         info.packages.add('sudo')
         info.packages.add('parted')
+        info.packages.add('waagent')
+        
 
         from bootstrapvz.common.tools import config_get, rel_path
         kernel_packages_path = rel_path(__file__, 'packages-kernels.yml')
@@ -22,12 +24,3 @@ class DefaultPackages(Task):
                                                            info.manifest.system['architecture']])
         info.packages.add(kernel_package)
 
-
-class Waagent(Task):
-    description = 'Add waagent'
-    phase = phases.package_installation
-    predecessors = [InstallPackages]
-
-    @classmethod
-    def run(cls, info):
-        info.packages.add('waagent')

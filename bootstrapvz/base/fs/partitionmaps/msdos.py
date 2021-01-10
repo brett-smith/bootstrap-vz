@@ -1,4 +1,4 @@
-from abstract import AbstractPartitionMap
+from .abstract import AbstractPartitionMap
 from ..exceptions import PartitionError
 from ..partitions.msdos import MSDOSPartition
 from ..partitions.msdos_swap import MSDOSSwapPartition
@@ -23,7 +23,7 @@ class MSDOSPartitionMap(AbstractPartitionMap):
 
         # Returns the last partition unless there is none
         def last_partition():
-            return self.partitions[-1] if len(self.partitions) > 0 else None
+            return self.partitions[-1] if self.partitions else None
 
         # The boot and swap partitions are optional
         if 'boot' in data:

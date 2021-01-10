@@ -10,6 +10,7 @@ properties:
     type: object
     properties:
       description: {type: string}
+      profile: {type: string}
       credentials:
         type: object
         properties:
@@ -23,6 +24,11 @@ properties:
         enum:
           - none
           - simple
+      amzn-driver-version:
+        type: string
+        pattern: "^([0-9]+\\.?){3}$"
+      encrypted: { type: boolean }
+      kms_key_id: { type: string }
     required: [description, virtualization]
   system:
     type: object

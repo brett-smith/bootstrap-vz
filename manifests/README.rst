@@ -74,8 +74,7 @@ Example:
 Bootstrapper
 ~~~~~~~~~~~~
 
-This section concerns the bootstrapper itself and its behavior. There
-are 4 possible settings:
+This section concerns the bootstrapper itself and its behavior.
 
 -  ``workspace``: Path to where the bootstrapper should place images
    and intermediate files. Any volumes will be mounted under that path.
@@ -108,6 +107,19 @@ are 4 possible settings:
    is ``minbase`` and should only be used in conjunction with the
    Docker provider. Not specifying this option will result in a normal
    Debian variant being bootstrapped.
+-  ``keyring``: path to keyring to check Release files against
+   ``optional``
+   Default: ``false``
+-  ``no-check-gpg``: avoid checking Release file signatures
+   ``optional``
+   Valid values: ``true, false``
+   Default: ``false``
+-  ``force-check-gpg``: force checking Release file signatures
+   (also disables automatic fallback to HTTPS in case
+   of a missing keyring), aborting otherwise
+   ``optional``
+   Valid values: ``true, false``
+   Default: ``false``
 
 
 Example:
@@ -151,7 +163,7 @@ system and does not fit under any other section.
    Valid values: Any locale mentioned in ``/etc/locale.gen``
    ``required``
 -  ``release``: Defines which debian release should be bootstrapped.
-   Valid values: ``squeeze``, ``wheezy``, ``jessie``, ``sid``,
+   Valid values: ``wheezy``, ``jessie``, ``stretch``, ``sid``,
    ``oldstable``, ``stable``, ``testing``, ``unstable``
    ``required``
 -  ``timezone``: Timezone of the system.
@@ -208,6 +220,7 @@ variety of sources.
    ``/etc/apt/sources.list.d/`` (with ``.list`` appended to it), except
    for ``main``, which designates ``/etc/apt/sources.list``.
    The value is an array with each entry being a line.
+   Note: To use HTTPS-based repos, you need to add "apt-transport-https" and "ca-certificates" to include_packages (`issue #476 <https://github.com/andsens/bootstrap-vz/issues/476>`__).
    ``optional``
 -  ``components``: A list of components that should be added to the
    default apt sources. For example ``contrib`` or ``non-free``
@@ -297,6 +310,7 @@ boot, root and swap.
    -  ``size``: The size of the partition. Valid values: Any
       datasize specification up to TB (e.g. 5KiB, 1MB, 6TB).
       ``required``
+   -  ``mode``: Set the mode bits of the mount point, e.g. '1777' for /tmp
    -  ``filesystem``: The filesystem of the partition. When choosing
       ``xfs``, the ``xfsprogs`` package will need to be installed.
       Valid values: ``ext2``, ``ext3``, ``ext4``, ``xfs``

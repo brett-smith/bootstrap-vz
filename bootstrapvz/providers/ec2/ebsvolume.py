@@ -4,16 +4,30 @@ from bootstrapvz.base.fs.exceptions import VolumeError
 
 class EBSVolume(Volume):
 
-    def create(self, conn, zone):
-        self.fsm.create(connection=conn, zone=zone)
+    def create(self, conn, zone, tags=[], encrypted=False, kms_key_id=None):
+        self.fsm.create(connection=conn, zone=zone, tags=tags, encrypted=encrypted, kms_key_id=kms_key_id)
 
     def _before_create(self, e):
         self.conn = e.connection
         zone = e.zone
+        tags = e.tags
         size = self.size.bytes.get_qty_in('GiB')
-        self.volume = self.conn.create_volume(Size=size,
-                                              AvailabilityZone=zone,
-                                              VolumeType='gp2')
+
+        params = {
+            'Size': size,
+            'AvailabilityZone': zone,
+            'VolumeType': 'gp2',
+        }
+        if tags:
+            params['TagSpecifications'] = [{'ResourceType': 'volume', 'Tags': tags}]
+
+        if e.encrypted:
+            params['Encrypted'] = e.encrypted
+            if e.kms_key_id:
+                params['KmsKeyId'] = e.kms_key_id
+
+        self.volume = self.conn.create_volume(**params)
+
         self.vol_id = self.volume['VolumeId']
         waiter = self.conn.get_waiter('volume_available')
         waiter.wait(VolumeIds=[self.vol_id],
@@ -62,5 +76,6 @@ class EBSVolume(Volume):
         self.snap_id = snapshot['SnapshotId']
         waiter = self.conn.get_waiter('snapshot_completed')
         waiter.wait(SnapshotIds=[self.snap_id],
-                    Filters=[{'Name': 'status', 'Values': ['completed']}])
+                    Filters=[{'Name': 'status', 'Values': ['completed']}],
+                    WaiterConfig={'Delay': 15, 'MaxAttempts': 120})
         return self.snap_id

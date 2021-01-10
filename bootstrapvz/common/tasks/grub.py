@@ -2,8 +2,8 @@ from bootstrapvz.base import Task
 from ..exceptions import TaskError
 from .. import phases
 from ..tools import log_check_call
-import filesystem
-import kernel
+from . import filesystem
+from . import kernel
 from bootstrapvz.base.fs import partitionmaps
 import os.path
 
@@ -203,7 +203,11 @@ class WriteGrubConfig(Task):
 
     @classmethod
     def run(cls, info):
-        grub_config_contents = ''
+        grub_config_contents = """# This file was created by bootstrap-vz.
+# See https://github.com/andsens/bootstrap-vz/blob/master/LICENSE for
+# legal notices and disclaimers.
+
+"""
         for key, value in info.grub_config.items():
             if isinstance(value, str):
                 grub_config_contents += '{}="{}"\n'.format(key, value)
@@ -212,7 +216,7 @@ class WriteGrubConfig(Task):
             elif isinstance(value, bool):
                 grub_config_contents += '{}="{}"\n'.format(key, str(value).lower())
             elif isinstance(value, list):
-                if len(value) > 0:
+                if value:
                     args_list = ' '.join(map(str, value))
                     grub_config_contents += '{}="{}"\n'.format(key, args_list)
             elif value is not None:
@@ -243,7 +247,7 @@ class SetGrubTerminalToConsole(Task):
     @classmethod
     def run(cls, info):
         # See issue #245 for more details
-        info.grub_config['TERMINAL'] = 'console'
+        info.grub_config['GRUB_TERMINAL'] = 'console'
 
 
 class SetGrubConsolOutputDeviceToSerial(Task):
@@ -254,7 +258,8 @@ class SetGrubConsolOutputDeviceToSerial(Task):
     @classmethod
     def run(cls, info):
         # See issue #245 for more details
-        info.grub_config['GRUB_CMDLINE_LINUX_DEFAULT'].append('console=ttyS0')
+        info.grub_config['GRUB_CMDLINE_LINUX'].append('console=ttyS0')
+        info.grub_config['GRUB_CMDLINE_LINUX'].append('earlyprintk=ttyS0')
 
 
 class RemoveGrubTimeout(Task):

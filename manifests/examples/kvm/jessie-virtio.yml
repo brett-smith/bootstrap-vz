@@ -2,9 +2,9 @@
 name: debian-{system.release}-{system.architecture}-{%Y}{%m}{%d}
 provider:
   name: kvm
-  virtio_modules:
-  - virtio_pci
-  - virtio_blk
+  virtio:
+    - virtio_pci
+    - virtio_blk
 bootstrapper:
   workspace: /target
 system:

@@ -1,12 +1,10 @@
 from bootstrapvz.base import Task
 from bootstrapvz.common import phases
-from bootstrapvz.common.tasks import bootstrap
-from bootstrapvz.common.tasks import workspace
+from bootstrapvz.common.tasks import bootstrap, workspace
 from bootstrapvz.common.tools import sed_i
 import os
 import shutil
 from . import assets
-
 
 class CreateDpkgCfg(Task):
     description = 'Creating /etc/dpkg/dpkg.cfg.d before bootstrapping'
@@ -15,9 +13,9 @@ class CreateDpkgCfg(Task):
 
     @classmethod
     def run(cls, info):
-        dir = os.path.join(info.root, 'etc/dpkg/dpkg.cfg.d')
-        if not os.path.exists(dir):
-            os.makedirs(dir)
+        dpkgcfg_path = os.path.join(info.root, 'etc/dpkg/dpkg.cfg.d')
+        if not os.path.exists(dpkgcfg_path):
+            os.makedirs(dpkgcfg_path)
 
 class InitializeBootstrapFilterList(Task):
     description = 'Initializing the bootstrapping filter list'
@@ -56,11 +54,11 @@ class CreateBootstrapFilterScripts(Task):
         # The pattern matching when excluding is needed in order to filter
         # everything below e.g. /usr/share/locale but not the folder itself
         filter_lists = info._minimize_size['bootstrap_filter']
-        exclude_list = '\|'.join(map(lambda p: '.' + p + '.\+', filter_lists['exclude']))
+        exclude_list = r'\|'.join(map(lambda p: '.' + p + r'.\+', filter_lists['exclude']))
         include_list = '\n'.join(map(lambda p: '.' + p, filter_lists['include']))
         sed_i(filter_script, r'EXCLUDE_PATTERN', exclude_list)
         sed_i(filter_script, r'INCLUDE_PATHS', include_list)
-        os.chmod(filter_script, 0755)
+        os.chmod(filter_script, 0o755)
 
         info.bootstrap_script = bootstrap_script
         info._minimize_size['filter_script'] = filter_script

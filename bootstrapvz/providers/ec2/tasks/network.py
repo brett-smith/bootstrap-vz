@@ -57,8 +57,8 @@ class InstallNetworkingUDevHotplugAndDHCPSubinterface(Task):
              os.path.join(script_dst, 'udev/rules.d/53-ec2-network-interfaces.rules'))
         os.chmod(os.path.join(script_dst, 'udev/rules.d/53-ec2-network-interfaces.rules'), rwxr_xr_x)
 
-        os.mkdir(os.path.join(script_dst, 'sysconfig'), 0755)
-        os.mkdir(os.path.join(script_dst, 'sysconfig/network-scripts'), 0755)
+        os.mkdir(os.path.join(script_dst, 'sysconfig'), 0o755)
+        os.mkdir(os.path.join(script_dst, 'sysconfig/network-scripts'), 0o755)
         copy(os.path.join(script_src, 'ec2net.hotplug'),
              os.path.join(script_dst, 'sysconfig/network-scripts/ec2net.hotplug'))
         os.chmod(os.path.join(script_dst, 'sysconfig/network-scripts/ec2net.hotplug'), rwxr_xr_x)
@@ -139,13 +139,25 @@ class InstallENANetworking(Task):
 
     @classmethod
     def run(cls, info):
-        version = '1.0.0'
-        drivers_url = 'https://github.com/amzn/amzn-drivers'
+        version = info.manifest.provider.get('amzn-driver-version', 'master')
+
+        if version != 'master':
+            version = 'ena_linux_' + version
+
+        drivers_url = 'https://codeload.github.com/amzn/amzn-drivers/tar.gz/' + version
         module_path = os.path.join(info.root, 'usr', 'src',
                                    'amzn-drivers-%s' % (version))
+        archive = os.path.join(info.root, 'tmp', 'amzn-drivers-%s.tar.gz' % (version))
+
+        import urllib
+        urllib.urlretrieve(drivers_url, archive)
 
         from bootstrapvz.common.tools import log_check_call
-        log_check_call(['git', 'clone', drivers_url, module_path])
+        log_check_call(['tar', '--ungzip',
+                               '--extract',
+                               '--file', archive,
+                               '--directory', os.path.join(info.root, 'usr',
+                                                           'src')])
 
         with open(os.path.join(module_path, 'dkms.conf'), 'w') as dkms_conf:
             dkms_conf.write("""PACKAGE_NAME="ena"

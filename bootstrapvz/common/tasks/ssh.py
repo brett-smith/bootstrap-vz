@@ -3,7 +3,8 @@ from .. import phases
 from ..tools import log_check_call
 import os.path
 from . import assets
-import initd
+from . import initd
+import shutil
 
 
 class AddOpenSSHPackage(Task):
@@ -23,16 +24,36 @@ class AddSSHKeyGeneration(Task):
     @classmethod
     def run(cls, info):
         init_scripts_dir = os.path.join(assets, 'init.d')
+        systemd_dir = os.path.join(assets, 'systemd')
         install = info.initd['install']
         from subprocess import CalledProcessError
         try:
             log_check_call(['chroot', info.root,
                             'dpkg-query', '-W', 'openssh-server'])
-            from bootstrapvz.common.releases import squeeze
-            if info.manifest.release == squeeze:
-                install['generate-ssh-hostkeys'] = os.path.join(init_scripts_dir, 'squeeze/generate-ssh-hostkeys')
+            from bootstrapvz.common.releases import wheezy
+            from bootstrapvz.common.releases import jessie
+            if info.manifest.release == wheezy:
+                install['generate-ssh-hostkeys'] = os.path.join(init_scripts_dir, 'wheezy/generate-ssh-hostkeys')
+            elif info.manifest.release == jessie:
+                install['generate-ssh-hostkeys'] = os.path.join(init_scripts_dir, 'jessie/generate-ssh-hostkeys')
             else:
-                install['generate-ssh-hostkeys'] = os.path.join(init_scripts_dir, 'generate-ssh-hostkeys')
+                install['ssh-generate-hostkeys'] = os.path.join(init_scripts_dir, 'ssh-generate-hostkeys')
+
+                ssh_keygen_host_service = os.path.join(systemd_dir, 'ssh-generate-hostkeys.service')
+                ssh_keygen_host_service_dest = os.path.join(info.root, 'etc/systemd/system/ssh-generate-hostkeys.service')
+
+                ssh_keygen_host_script = os.path.join(assets, 'ssh-generate-hostkeys')
+                ssh_keygen_host_script_dest = os.path.join(info.root, 'usr/local/sbin/ssh-generate-hostkeys')
+
+                # Copy files over
+                shutil.copy(ssh_keygen_host_service, ssh_keygen_host_service_dest)
+
+                shutil.copy(ssh_keygen_host_script, ssh_keygen_host_script_dest)
+                os.chmod(ssh_keygen_host_script_dest, 0o750)
+
+                # Enable systemd service
+                log_check_call(['chroot', info.root, 'systemctl', 'enable', 'ssh-generate-hostkeys.service'])
+
         except CalledProcessError:
             import logging
             logging.getLogger(__name__).warn('The OpenSSH server has not been installed, '
@@ -106,9 +127,12 @@ class ShredHostkeys(Task):
         if info.manifest.release >= wheezy:
             ssh_hostkeys.append('ssh_host_ecdsa_key')
 
+        from bootstrapvz.common.releases import jessie
+        if info.manifest.release >= jessie:
+            ssh_hostkeys.append('ssh_host_ed25519_key')
+
         private = [os.path.join(info.root, 'etc/ssh', name) for name in ssh_hostkeys]
         public = [path + '.pub' for path in private]
 
-        from ..tools import log_check_call
         log_check_call(['shred', '--remove'] + [key for key in private + public
                                                 if os.path.isfile(key)])

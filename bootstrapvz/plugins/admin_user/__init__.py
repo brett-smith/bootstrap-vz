@@ -5,7 +5,7 @@ def validate_manifest(data, validator, error):
 
 def resolve_tasks(taskset, manifest):
     import logging
-    import tasks
+    from . import tasks
     from bootstrapvz.common.tasks import ssh
 
     from bootstrapvz.common.releases import jessie
@@ -20,7 +20,6 @@ def resolve_tasks(taskset, manifest):
         taskset.add(tasks.CheckPublicKeyFile)
         taskset.add(tasks.AdminUserPublicKey)
     elif manifest.provider['name'] == 'ec2':
-        logging.getLogger(__name__).info("The SSH key will be obtained from EC2")
         taskset.add(tasks.AdminUserPublicKeyEC2)
     elif 'password' not in manifest.plugins['admin_user']:
         logging.getLogger(__name__).warn("No SSH key and no password set")

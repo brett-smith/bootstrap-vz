@@ -1,9 +1,9 @@
 from bootstrapvz.base import Task
 from .. import phases
 from ..tools import log_check_call
-import bootstrap
-import host
-import volume
+from . import bootstrap
+from . import host
+from . import volume
 
 
 class AddRequiredCommands(Task):
@@ -125,6 +125,32 @@ class MountAdditional(Task):
                 p_map.root.add_mount(getattr(p_map, partition.name), partition.name)
             else:
                 p_map.root.add_mount(getattr(p_map, partition.name), partition.name, ['--options'] + partition.mountopts)
+
+
+class ChmodMountDirs(Task):
+    description = 'Chmod mount dirs'
+    phase = phases.volume_mounting
+    predecessors = [MountAdditional]
+
+    @classmethod
+    def run(cls, info):
+        import os
+        from bootstrapvz.base.fs.partitions.unformatted import UnformattedPartition
+        from bootstrapvz.base.fs.partitions.single import SinglePartition
+
+        def has_mode(partition):
+            return (not isinstance(partition, (UnformattedPartition, SinglePartition)) and
+                    'mode' in info.manifest.volume['partitions'][partition.name] and
+                    info.manifest.volume['partitions'][partition.name]['mode'] is not None)
+
+        p_map = info.volume.partition_map
+        partitions = p_map.partitions
+        for partition in list(
+                filter(has_mode, partitions)):
+            partition = getattr(p_map, partition.name)
+            mode_str = info.manifest.volume['partitions'][partition.name]['mode']
+            mode = int(mode_str, 8)
+            os.chmod(os.path.join(info.root, partition.name), mode)
 
 
 class MountSpecials(Task):

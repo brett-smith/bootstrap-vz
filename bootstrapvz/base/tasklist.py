@@ -158,7 +158,7 @@ def get_all_tasks(loaded_modules):
 
     # lambda function to check whether a class is a task (excluding the superclass Task)
     def is_task(obj):
-        from task import Task
+        from .task import Task
         return issubclass(obj, Task) and obj is not Task
     return filter(is_task, classes)  # Only return classes that are tasks
 
@@ -189,7 +189,7 @@ def get_all_classes(path=None, prefix='', excludes=[]):
         for class_name, obj in classes:
             # We only want classes that are defined in the module, and not imported ones
             if obj.__module__ == module_name:
-                    yield obj
+                yield obj
 
 
 def check_ordering(task):

@@ -1,13 +1,11 @@
 from bootstrapvz.common import task_groups
-import tasks.packages
-import tasks.boot
-import tasks.image
+from bootstrapvz.common.tasks import image
 from bootstrapvz.common.tasks import loopback
 from bootstrapvz.common.tasks import initd
 from bootstrapvz.common.tasks import ssh
 from bootstrapvz.common.tasks import apt
 from bootstrapvz.common.tasks import grub
-from bootstrapvz.common.tasks import image
+from .tasks import packages, boot
 
 
 def validate_manifest(data, validator, error):
@@ -18,16 +16,18 @@ def validate_manifest(data, validator, error):
 def resolve_tasks(taskset, manifest):
     taskset.update(task_groups.get_standard_groups(manifest))
     taskset.update([apt.AddBackports,
-                    tasks.packages.DefaultPackages,
+                    packages.DefaultPackages,
                     loopback.AddRequiredCommands,
                     loopback.Create,
                     image.MoveImage,
-                    tasks.image.FixVHD,
+                    image.FixVHD,
                     initd.InstallInitScripts,
                     ssh.AddOpenSSHPackage,
                     ssh.ShredHostkeys,
                     ssh.AddSSHKeyGeneration,
-                    tasks.boot.ConfigureGrub,
+                    packages.Waagent,
+                    boot.ConfigureGrub,
+                    boot.PatchUdev,
                     ])
     taskset.discard(grub.SetGrubConsolOutputDeviceToSerial)
 

@@ -1,5 +1,5 @@
 from bootstrapvz.common.tools import rel_path
-import tasks
+from . import tasks
 from bootstrapvz.common.tasks import apt
 from bootstrapvz.common.releases import wheezy
 
@@ -23,5 +23,5 @@ def resolve_tasks(taskset, manifest):
     taskset.add(tasks.AddDockerBinary)
     taskset.add(tasks.AddDockerInit)
     taskset.add(tasks.EnableMemoryCgroup)
-    if len(manifest.plugins['docker_daemon'].get('pull_images', [])) > 0:
+    if manifest.plugins['docker_daemon'].get('pull_images', []):
         taskset.add(tasks.PullDockerImages)

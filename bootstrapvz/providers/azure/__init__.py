@@ -1,11 +1,13 @@
 from bootstrapvz.common import task_groups
-from bootstrapvz.common.tasks import image
 from bootstrapvz.common.tasks import loopback
 from bootstrapvz.common.tasks import initd
 from bootstrapvz.common.tasks import ssh
 from bootstrapvz.common.tasks import apt
 from bootstrapvz.common.tasks import grub
-from .tasks import packages, boot
+
+import bootstrapvz.common.tasks.image as commonimage
+
+from .tasks import packages, boot, image
 
 
 def validate_manifest(data, validator, error):
@@ -19,7 +21,7 @@ def resolve_tasks(taskset, manifest):
                     packages.DefaultPackages,
                     loopback.AddRequiredCommands,
                     loopback.Create,
-                    image.MoveImage,
+                    commonimage.MoveImage,
                     image.FixVHD,
                     initd.InstallInitScripts,
                     ssh.AddOpenSSHPackage,

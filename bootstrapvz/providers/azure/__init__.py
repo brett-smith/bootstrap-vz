@@ -27,7 +27,6 @@ def resolve_tasks(taskset, manifest):
                     ssh.AddOpenSSHPackage,
                     ssh.ShredHostkeys,
                     ssh.AddSSHKeyGeneration,
-                    packages.Waagent,
                     boot.ConfigureGrub,
                     boot.PatchUdev,
                     ])

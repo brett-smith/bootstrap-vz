@@ -31,5 +31,4 @@ class ConfigureGrub(Task):
             'console=tty0',
             'console=ttyS0,115200n8',
             'earlyprintk=ttyS0,115200',
-            'rootdelay=300',
         ])

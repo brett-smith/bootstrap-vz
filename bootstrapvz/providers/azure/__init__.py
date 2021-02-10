@@ -28,7 +28,6 @@ def resolve_tasks(taskset, manifest):
                     ssh.ShredHostkeys,
                     ssh.AddSSHKeyGeneration,
                     boot.ConfigureGrub,
-                    boot.PatchUdev,
                     ])
     taskset.discard(grub.SetGrubConsolOutputDeviceToSerial)
 

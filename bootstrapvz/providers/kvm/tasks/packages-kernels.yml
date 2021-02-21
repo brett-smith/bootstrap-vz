@@ -13,5 +13,8 @@ stretch:
 buster:
   amd64: linux-image-amd64
   arm64: linux-image-arm64
+bullseye:
+  amd64: linux-image-amd64
+  arm64: linux-image-arm64
 sid:
   amd64: linux-image-amd64

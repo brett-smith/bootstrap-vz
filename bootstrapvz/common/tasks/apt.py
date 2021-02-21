@@ -57,7 +57,7 @@ class AddDefaultSources(Task):
 
     @classmethod
     def run(cls, info):
-        from bootstrapvz.common.releases import sid, wheezy, stretch, buster
+        from bootstrapvz.common.releases import sid, wheezy, stretch, buster, bullseye
         include_src = info.manifest.packages.get('include-source-type', False)
         components = ' '.join(info.manifest.packages.get('components', ['main']))
         info.source_lists.add('main', 'deb     {apt_mirror} {system.release} ' + components)

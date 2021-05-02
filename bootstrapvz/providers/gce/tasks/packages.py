@@ -22,6 +22,8 @@ class DefaultPackages(Task):
         info.packages.add('lsb-release')
         info.packages.add('ntp')
         info.packages.add('parted')
+        info.packages.add('gnupg')
+        info.packages.add('gnupg2')
         info.packages.add('python')
         info.packages.add('openssh-client')
         info.packages.add('openssh-server')

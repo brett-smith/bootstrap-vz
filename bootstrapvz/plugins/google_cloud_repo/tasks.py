@@ -5,15 +5,14 @@ from bootstrapvz.common.tasks import packages
 from bootstrapvz.common.tools import log_check_call
 import os
 
-class AddGoogleCloudDeps(Task):
-    description = 'Add packages for google cloud deps'
+class AddGPG(Task):
+    description = 'Add packages for google bootstrap setup'
     phase = phases.preparation
-    GC_DEPS = ['gnupg']
 
     @classmethod
     def run(cls, info):
-        for pkg in cls.GC_DEPS:
-            info.packages.add(pkg)
+        info.include_packages.add('gpg')
+        info.include_packages.add('gpg-agent')
 
 class AddGoogleCloudRepoKey(Task):
     description = 'Adding Google Cloud Repo key.'

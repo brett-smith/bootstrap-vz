@@ -66,7 +66,7 @@ class AddDefaultSources(Task):
         if info.manifest.release != sid and info.manifest.release >= stretch:
             
             if info.manifest.release != sid and info.manifest.release >= bullseye:
-                info.source_lists.add('main', 'deb     {apt_mirror} {system.release}-security ' + components)
+                info.source_lists.add('main', 'deb     {apt_mirror}-security {system.release}-security ' + components)
                 if include_src:
                     info.source_lists.add('main', 'deb-src {apt_mirror} {system.release}-security ' + components)
             else:

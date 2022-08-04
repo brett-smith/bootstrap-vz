@@ -88,7 +88,7 @@ class InstallEnhancedNetworking(Task):
 
     @classmethod
     def run(cls, info):
-        from bootstrapvz.common.releases import stretch
+        from bootstrapvz.common.releases import stretch, buster
         if info.manifest.release >= buster:
             version = '4.16.5'
             drivers_url = 'https://master.dl.sourceforge.net/project/e1000/ixgbevf%20stable/4.16.5/ixgbevf-4.16.5.tar.gz'

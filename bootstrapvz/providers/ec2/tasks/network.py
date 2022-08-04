@@ -92,12 +92,15 @@ class InstallEnhancedNetworking(Task):
         # It appears the latest version will always get a prefix of 18700.
         # Once a new version is released, the url int prefix will change (no redirects)
         # to something above the 2nd most recent release. You've been warned.
-        if info.manifest.release >= stretch:
+        if info.manifest.release >= buster:
+            version = '4.16.5'
+            drivers_url = 'https://master.dl.sourceforge.net/project/e1000/ixgbevf%20stable/4.16.5/ixgbevf-4.16.5.tar.gz'
+        else if info.manifest.release >= stretch:
             version = '4.3.4'
-            drivers_url = 'https://downloadmirror.intel.com/27874/eng/ixgbevf-4.3.4.tar.gz'
+            drivers_url = 'https://master.dl.sourceforge.net/project/e1000/ixgbevf%20stable/4.3.4/ixgbevf-4.3.4.tar.gz'
         else:
             version = '3.2.2'
-            drivers_url = 'https://downloadmirror.intel.com/26561/eng/ixgbevf-3.2.2.tar.gz'
+            drivers_url = 'https://master.dl.sourceforge.net/project/e1000/ixgbevf%20stable/3.2.2/ixgbevf-3.2.2.tar.gz'
         # Sadly the first number in the URL changes:
         # 2.16.1 => https://downloadmirror.intel.com/25464/eng/ixgbevf-2.16.1.tar.gz
         archive = os.path.join(info.root, 'tmp', 'ixgbevf-%s.tar.gz' % (version))

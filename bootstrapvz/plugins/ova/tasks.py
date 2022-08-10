@@ -107,7 +107,7 @@ class PackageOVA(Task):
 		# Set the operating system
 		[os_section] = system.findall('./ovf:OperatingSystemSection', namespaces)
 		os_info = {'i386': {'id': 96, 'name': 'Debian'},
-		           'amd64': {'id': 96, 'name': 'Debian_64'}
+		           'amd64': {'id': 96, 'name': 'debian6_64Guest'}
 		           }.get(info.manifest.system['architecture'])
 		attr(os_section, 'ovf:id', os_info['id'])
 		[os_desc] = os_section.findall('./ovf:Description', namespaces)

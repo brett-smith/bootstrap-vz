@@ -10,9 +10,9 @@ class DefaultPackages(Task):
     @classmethod
     def run(cls, info):
         info.packages.add('openssl')
-        info.packages.add('python3-openssl')
-        info.packages.add('python3-pyasn1')
-        info.packages.add('python3-setuptools')
+        info.packages.add('python-openssl')
+        #info.packages.add('python-pyasn1')
+        info.packages.add('python-setuptools')
         info.packages.add('sudo')
         info.packages.add('parted')
         info.packages.add('waagent')

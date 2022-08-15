@@ -10,7 +10,7 @@ class DefaultPackages(Task):
     @classmethod
     def run(cls, info):
         info.packages.add('openssl')
-        info.packages.add('python-openssl')
+        #info.packages.add('python-openssl')
         #info.packages.add('python-pyasn1')
         info.packages.add('python-setuptools')
         info.packages.add('sudo')

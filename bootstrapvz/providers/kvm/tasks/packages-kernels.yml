@@ -16,5 +16,8 @@ buster:
 bullseye:
   amd64: linux-image-amd64
   arm64: linux-image-arm64
+bookworm:
+  amd64: linux-image-amd64
+  arm64: linux-image-arm64
 sid:
   amd64: linux-image-amd64

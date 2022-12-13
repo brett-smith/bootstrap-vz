@@ -16,6 +16,7 @@ properties:
         - stretch
         - buster
         - bullseye
+        - bookworm
         - testing
         - sid
         - unstable

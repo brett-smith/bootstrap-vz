@@ -1,6 +1,7 @@
 from bootstrapvz.base import Task
 from bootstrapvz.common import phases
 from bootstrapvz.common.tasks.packages import InstallPackages
+from bootstrapvz.common.releases import bookworm
 
 
 class DefaultPackages(Task):

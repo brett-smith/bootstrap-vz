@@ -12,7 +12,8 @@ class DefaultPackages(Task):
         info.packages.add('openssl')
         #info.packages.add('python-openssl')
         #info.packages.add('python-pyasn1')
-        info.packages.add('python-setuptools')
+        if info.manifest.release < bookworm:
+            info.packages.add('python-setuptools')
         info.packages.add('sudo')
         info.packages.add('parted')
         info.packages.add('waagent')

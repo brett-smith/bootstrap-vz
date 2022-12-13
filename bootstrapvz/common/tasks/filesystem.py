@@ -176,8 +176,8 @@ class CopyMountTable(Task):
     def run(cls, info):
         import shutil
         import os.path
-        shutil.copy('/proc/mounts', os.path.join(info.root, 'etc/mtab'))
-
+        if not os.path.samefile('/proc/mounts', os.path.join(info.root, 'etc/mtab')):
+            shutil.copy('/proc/mounts', os.path.join(info.root, 'etc/mtab'))
 
 class UnmountRoot(Task):
     description = 'Unmounting the bootstrap volume'

@@ -39,7 +39,7 @@ class FixVHD(Task):
         for line in img_info:
             match = regexp.match(line)
             if match is not None:
-                bytes = int(line.split(' ')[3][1:])
+                bytes = int(line.split(' ')[4][1:])
         if bytes == 0:
             raise Exception('Could not determine image size')
         mb = 1024 * 1024

@@ -54,7 +54,7 @@ class PackageOVA(Task):
 		cls.write_ovf(info, ovf_path, mac_address, disk_name)
 
 		ova_files = os.listdir(info._ova['folder'])
-		log_check_call(['ovftool', ovf_path, info._ova['ova_path']]
+		log_check_call(['ovftool', '--shaAlgorithm=SHA1', ovf_path, info._ova['ova_path']]
 		               )
 		import logging
 		logging.getLogger(__name__).info('The OVA has been placed at ' + info._ova['ova_path'])

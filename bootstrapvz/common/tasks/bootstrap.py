@@ -38,6 +38,7 @@ def get_bootstrap_args(info):
         options.append('--include=' + ','.join(info.include_packages))
     if info.exclude_packages:
         options.append('--exclude=' + ','.join(info.exclude_packages))
+    options.append('--no-merged-usr')
     mirror = info.manifest.bootstrapper.get('mirror', info.apt_mirror)
     arguments = [info.manifest.system['release'], info.root, mirror]
     return executable, options, arguments

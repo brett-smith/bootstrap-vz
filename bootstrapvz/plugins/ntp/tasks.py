@@ -22,7 +22,10 @@ class SetNtpServers(Task):
         import fileinput
         import os
         import re
-        ntp_path = os.path.join(info.root, 'etc/ntp.conf')
+        if os.path.exists(os.path.join(info.root, 'etc/ntpsec'))
+            ntp_path = os.path.join(info.root, 'etc/ntpsec/ntp.conf')
+        else:
+            ntp_path = os.path.join(info.root, 'etc/ntp.conf')
         servers = list(info.manifest.plugins['ntp']['servers'])
         debian_ntp_server = re.compile(r'.*[0-9]\.debian\.pool\.ntp\.org.*')
         for line in fileinput.input(files=ntp_path, inplace=True):

@@ -22,7 +22,7 @@ class SetNtpServers(Task):
         import fileinput
         import os
         import re
-        if os.path.exists(os.path.join(info.root, 'etc/ntpsec'))
+        if os.path.exists(os.path.join(info.root, 'etc/ntpsec')):
             ntp_path = os.path.join(info.root, 'etc/ntpsec/ntp.conf')
         else:
             ntp_path = os.path.join(info.root, 'etc/ntp.conf')

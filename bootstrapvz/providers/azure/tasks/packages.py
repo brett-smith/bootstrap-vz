@@ -18,6 +18,7 @@ class DefaultPackages(Task):
         info.packages.add('sudo')
         info.packages.add('parted')
         info.packages.add('waagent')
+        info.packages.add('cloud-init')
         
 
         from bootstrapvz.common.tools import config_get, rel_path

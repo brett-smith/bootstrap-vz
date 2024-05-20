@@ -89,11 +89,11 @@ def create_list(taskset, all_tasks):
         # Add all successors mentioned in the task
         successors.update(task.successors)
         # Add all tasks that mention this task as a predecessor
-        successors.update(filter(lambda succ: task in succ.predecessors, all_tasks))
+        successors.update([succ for succ in all_tasks if task in succ.predecessors])
         # Create a list of phases that succeed the phase of this task
         succeeding_phases = order[order.index(task.phase) + 1:]
         # Add all tasks that occur in above mentioned succeeding phases
-        successors.update(filter(lambda succ: succ.phase in succeeding_phases, all_tasks))
+        successors.update([succ for succ in all_tasks if succ.phase in succeeding_phases])
         # Map the successors to the task
         graph[task] = successors
 
@@ -115,7 +115,7 @@ def create_list(taskset, all_tasks):
 
     # Filter out any tasks not in the tasklist
     # We want to maintain ordering, so we don't use set intersection
-    sorted_tasks = filter(lambda task: task in taskset, sorted_tasks)
+    sorted_tasks = [task for task in sorted_tasks if task in taskset]
     return sorted_tasks
 
 
@@ -160,7 +160,7 @@ def get_all_tasks(loaded_modules):
     def is_task(obj):
         from .task import Task
         return issubclass(obj, Task) and obj is not Task
-    return filter(is_task, classes)  # Only return classes that are tasks
+    return list(filter(is_task, classes))  # Only return classes that are tasks
 
 
 def get_all_classes(path=None, prefix='', excludes=[]):
@@ -178,11 +178,11 @@ def get_all_classes(path=None, prefix='', excludes=[]):
     import inspect
 
     def walk_error(module_name):
-        if not any(map(lambda excl: module_name.startswith(excl), excludes)):
+        if not any([module_name.startswith(excl) for excl in excludes]):
             raise TaskListError('Unable to inspect module ' + module_name)
     walker = pkgutil.walk_packages([path], prefix, walk_error)
     for _, module_name, _ in walker:
-        if any(map(lambda excl: module_name.startswith(excl), excludes)):
+        if any([module_name.startswith(excl) for excl in excludes]):
             continue
         module = importlib.import_module(module_name)
         classes = inspect.getmembers(module, inspect.isclass)

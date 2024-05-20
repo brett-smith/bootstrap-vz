@@ -21,7 +21,7 @@ def test_unpartitioned_extlinux_oldstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_extlinux_oldstable():
@@ -30,7 +30,7 @@ def test_msdos_extlinux_oldstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_extlinux_oldstable():
@@ -39,7 +39,7 @@ def test_gpt_extlinux_oldstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_unpartitioned_extlinux_stable():
@@ -48,7 +48,7 @@ def test_unpartitioned_extlinux_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_extlinux_stable():
@@ -57,7 +57,7 @@ def test_msdos_extlinux_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_extlinux_stable():
@@ -66,7 +66,7 @@ def test_gpt_extlinux_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_grub_stable():
@@ -75,7 +75,7 @@ def test_msdos_grub_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_grub_stable():
@@ -84,7 +84,7 @@ def test_gpt_grub_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_unpartitioned_extlinux_unstable():
@@ -93,7 +93,7 @@ def test_unpartitioned_extlinux_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_extlinux_unstable():
@@ -102,7 +102,7 @@ def test_msdos_extlinux_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_extlinux_unstable():
@@ -111,7 +111,7 @@ def test_gpt_extlinux_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_grub_unstable():
@@ -120,7 +120,7 @@ def test_msdos_grub_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_grub_unstable():
@@ -129,4 +129,4 @@ def test_gpt_grub_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't2.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))

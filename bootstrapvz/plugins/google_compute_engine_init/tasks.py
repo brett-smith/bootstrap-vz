@@ -13,7 +13,7 @@ class AddGoogleComputeEngineInitRepos(Task):
 
     @classmethod
     def run(cls, info):
-        info.source_lists.add('google-cloud-compute', 'deb http://packages.cloud.google.com/apt google-cloud-compute-%s main' % info.manifest.plugins['google_compute_engine_init'].get('repository_suffix', '{system.release}') )
+        info.source_lists.add('google-cloud-compute', 'deb http://packages.cloud.google.com/apt google-compute-engine-%s main' % info.manifest.plugins['google_compute_engine_init'].get('repository_suffix', '{system.release}') )
 
 class InstallGoogleComputeEngineInitPackages(Task):
     description = 'Installing Google Compute Engine Init packages.'
@@ -22,7 +22,5 @@ class InstallGoogleComputeEngineInitPackages(Task):
 
     @classmethod
     def run(cls, info):
-        info.packages.add('google-compute-engine-{system.release}')
-        info.packages.add('google-compute-engine-init-{system.release}')
-        info.packages.add('google-config-{system.release}')
+        info.packages.add('google-compute-engine')
 

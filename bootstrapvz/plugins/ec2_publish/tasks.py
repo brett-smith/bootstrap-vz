@@ -49,7 +49,7 @@ class PublishAmiManifest(Task):
         import json
         amis_json = json.dumps(info._ec2['region_amis'])
 
-        from urlparse import urlparse
+        from urllib.parse import urlparse
         parsed_url = urlparse(manifest_url)
         parsed_host = parsed_url.netloc
         if not parsed_url.scheme:
@@ -86,7 +86,7 @@ class PublishAmi(Task):
         logger = logging.getLogger(__name__)
 
         import time
-        for region, region_ami in region_amis.items():
+        for region, region_ami in list(region_amis.items()):
             conn = region_conns[region]
             current_image = conn.get_image(region_ami)
             while current_image.state == 'pending':

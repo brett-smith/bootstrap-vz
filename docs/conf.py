@@ -47,8 +47,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'bootstrap-vz'
-copyright = u'2014, Anders Ingemann'
+project = 'bootstrap-vz'
+copyright = '2014, Anders Ingemann'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -206,8 +206,8 @@ latex_elements = {}
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [('index', 'bootstrap-vz.tex', u'bootstrap-vz Documentation',
-                    u'Anders Ingemann', 'manual'),
+latex_documents = [('index', 'bootstrap-vz.tex', 'bootstrap-vz Documentation',
+                    'Anders Ingemann', 'manual'),
                    ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -235,7 +235,7 @@ latex_documents = [('index', 'bootstrap-vz.tex', u'bootstrap-vz Documentation',
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [('index', 'bootstrap-vz', u'bootstrap-vz Documentation', [u'Anders Ingemann'], 1)]
+man_pages = [('index', 'bootstrap-vz', 'bootstrap-vz Documentation', ['Anders Ingemann'], 1)]
 
 # If true, show URL addresses after external links.
 #man_show_urls = False
@@ -246,8 +246,8 @@ man_pages = [('index', 'bootstrap-vz', u'bootstrap-vz Documentation', [u'Anders 
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
-texinfo_documents = [('index', 'bootstrap-vz', u'bootstrap-vz Documentation',
-                      u'Anders Ingemann', 'bootstrap-vz', 'One line description of project.',
+texinfo_documents = [('index', 'bootstrap-vz', 'bootstrap-vz Documentation',
+                      'Anders Ingemann', 'bootstrap-vz', 'One line description of project.',
                       'Miscellaneous'),
                      ]
 
@@ -344,7 +344,7 @@ def linkcode_resolve(domain, info):
         value = getattr(value, part, None)
         if value is None:
             break
-    valid_types = (types.ModuleType, types.ClassType, types.MethodType,
+    valid_types = (types.ModuleType, type, types.MethodType,
                    types.FunctionType, types.TracebackType,
                    types.FrameType, types.CodeType)
     if isinstance(value, valid_types):

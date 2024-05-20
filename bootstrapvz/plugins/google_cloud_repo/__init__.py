@@ -7,10 +7,6 @@ def validate_manifest(data, validator, error):
 
 
 def resolve_tasks(taskset, manifest):
-    #taskset.add(tasks.AddGPG)
+    taskset.add(tasks.AddGPG)
     taskset.add(tasks.AddGoogleCloudRepoKey)
-    if manifest.plugins['google_cloud_repo'].get('enable_keyring_repo', False):
-        taskset.add(tasks.AddGoogleCloudRepoKeyringRepo)
-        taskset.add(tasks.InstallGoogleCloudRepoKeyringPackage)
-        if manifest.plugins['google_cloud_repo'].get('cleanup_bootstrap_key', False):
-            taskset.add(tasks.CleanupBootstrapRepoKey)
+    taskset.add(tasks.AddGoogleCloudRepo)

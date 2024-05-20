@@ -46,6 +46,6 @@ class DetermineKernelVersion(Task):
         from glob import glob
         boot = os.path.join(info.root, 'boot')
         vmlinuz_paths = glob('{boot}/vmlinuz-*'.format(boot=boot))
-        kernels = map(get_kernel_version, vmlinuz_paths)
+        kernels = list(map(get_kernel_version, vmlinuz_paths))
         info.kernel_version = sorted(kernels, reverse=True)[0]
         logging.getLogger(__name__).debug('Kernel version is {version}'.format(version=info.kernel_version))

@@ -27,26 +27,14 @@ class AddGoogleCloudRepoKey(Task):
         log_check_call(['chroot', info.root, 'apt-key', 'add', 'google.gpg.key'])
         os.remove(key_file)
 
-
-class AddGoogleCloudRepoKeyringRepo(Task):
-    description = 'Adding Google Cloud keyring repository.'
+class AddGoogleCloudRepo(Task):
+    description = 'Adding Google Cloud Repo.'
     phase = phases.preparation
     predecessors = [apt.AddManifestSources]
 
     @classmethod
     def run(cls, info):
-        info.source_lists.add('google-cloud', 'deb http://packages.cloud.google.com/apt %s main' % info.manifest.plugins['google_cloud_repo'].get('repository_name', 'google-cloud-packages-archive-keyring-{system.release}') )
-
-
-class InstallGoogleCloudRepoKeyringPackage(Task):
-    description = 'Installing Google Cloud key package.'
-    phase = phases.preparation
-    successors = [packages.AddManifestPackages]
-
-    @classmethod
-    def run(cls, info):
-        info.packages.add('google-cloud-packages-archive-keyring')
-
+        info.source_lists.add('google-cloud-sdk', 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main')
 
 class CleanupBootstrapRepoKey(Task):
     description = 'Cleaning up bootstrap repo key.'

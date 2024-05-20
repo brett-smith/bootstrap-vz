@@ -65,7 +65,7 @@ def deserialize(fq_classname, data):
     from Pyro4.errors import SecurityError
     ser = SerpentSerializer()
     state = {}
-    for key, value in data.items():
+    for key, value in list(data.items()):
         try:
             state[key] = ser.recreate_classes(value)
         except SecurityError as e:

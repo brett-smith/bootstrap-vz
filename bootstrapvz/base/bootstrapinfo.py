@@ -90,7 +90,7 @@ class BootstrapInformation(object):
             :param dict obj: dictionary to set the values on
             :param dict data: dictionary of values to set on the obj
             """
-            for key, value in data.iteritems():
+            for key, value in data.items():
                 if isinstance(value, dict):
                     obj[key] = DictClass()
                     set_manifest_vars(obj[key], value)
@@ -130,7 +130,7 @@ class BootstrapInformation(object):
 
         def filter_state(state):
             if isinstance(state, dict):
-                return {key: filter_state(val) for key, val in state.items() if can_serialize(val)}
+                return {key: filter_state(val) for key, val in list(state.items()) if can_serialize(val)}
             if isinstance(state, (set, tuple, list, frozenset)):
                 return type(state)(filter_state(val) for val in state if can_serialize(val))
             return state

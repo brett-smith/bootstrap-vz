@@ -17,7 +17,7 @@ class CheckExternalCommands(Task):
         from distutils.spawn import find_executable
         missing_packages = []
         log = logging.getLogger(__name__)
-        for command, package in info.host_dependencies.items():
+        for command, package in list(info.host_dependencies.items()):
             log.debug('Checking availability of ' + command)
             path = find_executable(command)
             if path is None or not os.access(path, os.X_OK):

@@ -10,7 +10,7 @@ def validate_manifest(data, validator, error):
     from bootstrapvz.common.releases import get_release
     if get_release(data['system']['release']) == wheezy:
         # prefs is a generator of apt preferences across files in the manifest
-        prefs = (item for vals in data.get('packages', {}).get('preferences', {}).values() for item in vals)
+        prefs = (item for vals in list(data.get('packages', {}).get('preferences', {}).values()) for item in vals)
         if not any('linux-image' in item['package'] and 'wheezy-backports' in item['pin'] for item in prefs):
             msg = 'The backports kernel is required for the docker daemon to function properly'
             error(msg, ['packages', 'preferences'])

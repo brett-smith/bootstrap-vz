@@ -47,11 +47,11 @@ class PopulateLabels(Task):
         labels['architecture'] = info.manifest.system['architecture']
         labels['build-date'] = pyrfc3339.generate(datetime.utcnow().replace(tzinfo=pytz.utc))
         if 'labels' in info.manifest.provider:
-            for label, value in info.manifest.provider['labels'].items():
+            for label, value in list(info.manifest.provider['labels'].items()):
                 labels[label] = value.format(**info.manifest_vars)
 
         from pipes import quote
-        for label, value in labels.items():
+        for label, value in list(labels.items()):
             info._docker['dockerfile'].append('LABEL {}={}'.format(label, quote(value)))
 
 

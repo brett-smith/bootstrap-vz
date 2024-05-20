@@ -54,7 +54,7 @@ class PackageList(object):
         # packages may be installed in the correct order.
         self.install = []
         # A function that filters the install list and only returns remote packages
-        self.remote = lambda: filter(lambda x: isinstance(x, self.Remote), self.install)
+        self.remote = lambda: [x for x in self.install if isinstance(x, self.Remote)]
 
     def add(self, name, target=None):
         """Adds a package to the install list

@@ -13,7 +13,7 @@ def test_unpartitioned_extlinux_oldstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_msdos_extlinux_oldstable():
@@ -21,7 +21,7 @@ def test_msdos_extlinux_oldstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_gpt_extlinux_oldstable():
@@ -29,7 +29,7 @@ def test_gpt_extlinux_oldstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_unpartitioned_extlinux_stable():
@@ -37,7 +37,7 @@ def test_unpartitioned_extlinux_stable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_msdos_extlinux_stable():
@@ -45,7 +45,7 @@ def test_msdos_extlinux_stable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_gpt_extlinux_stable():
@@ -53,7 +53,7 @@ def test_gpt_extlinux_stable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_msdos_grub_stable():
@@ -61,7 +61,7 @@ def test_msdos_grub_stable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_gpt_grub_stable():
@@ -69,7 +69,7 @@ def test_gpt_grub_stable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_unpartitioned_extlinux_unstable():
@@ -77,7 +77,7 @@ def test_unpartitioned_extlinux_unstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_msdos_extlinux_unstable():
@@ -85,7 +85,7 @@ def test_msdos_extlinux_unstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_gpt_extlinux_unstable():
@@ -93,7 +93,7 @@ def test_gpt_extlinux_unstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_msdos_grub_unstable():
@@ -101,7 +101,7 @@ def test_msdos_grub_unstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))
 
 
 def test_gpt_grub_unstable():
@@ -109,4 +109,4 @@ def test_gpt_grub_unstable():
     custom_partials = [partials['vmdk']]
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     with boot_manifest(manifest_data) as instance:
-        print(instance.console_output)
+        print((instance.console_output))

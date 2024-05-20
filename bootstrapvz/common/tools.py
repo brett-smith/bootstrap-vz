@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import os
 
 
@@ -35,7 +35,7 @@ def log_call(command, stdin=None, env=None, shell=False, cwd=None):
 
     if stdin is not None:
         log.debug('  stdin: ' + stdin)
-        process.stdin.write(stdin + "\n")
+        process.stdin.write((stdin + "\n").encode("utf-8"))
         process.stdin.flush()
     process.stdin.close()
 
@@ -54,8 +54,8 @@ def log_call(command, stdin=None, env=None, shell=False, cwd=None):
                 process.stderr: handle_stderr}
 
     def stream_readline(stream):
-        for line in iter(stream.readline, ''):
-            handlers[stream](line.strip())
+        for line in stream:
+            handlers[stream](line.decode("utf-8").strip())
 
     pool = ThreadPool(2)
     pool.map(stream_readline, [process.stdout, process.stderr])
@@ -88,10 +88,9 @@ def inline_replace(file_path, pattern, subst):
 
 
 def load_json(path):
-    import json
-    from json_minify import json_minify
+    import json5 as json
     with open(path) as stream:
-        return json.loads(json_minify(stream.read(), False))
+        return json.loads(stream.read())
 
 
 def load_yaml(path):

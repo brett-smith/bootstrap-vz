@@ -21,6 +21,27 @@ class Phase(object):
         from bootstrapvz.common.phases import order
         return next(i for i, phase in enumerate(order) if phase is self)
 
+    def __lt__(self, other):
+        return self.pos() < other.pos()
+
+    def __gt__(self, other):
+        return self.pos() > other.pos()
+        
+    def __ge__(self, other):
+        return self.pos() >= other.pos()
+        
+    def __ne__(self, other):
+        return self.pos() != other.pos()
+        
+    def __eq__(self, other):
+        return self.pos() == other.pos()
+
+    def __le__(self, other):
+        return self.pos() <= other.pos()
+
+    def __cmp__(self, other):
+        return self.version - other.version
+
     def __cmp__(self, other):
         """Compares the phase order in relation to the other phases
         :return int:

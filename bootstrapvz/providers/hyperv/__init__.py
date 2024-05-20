@@ -1,5 +1,5 @@
 from bootstrapvz.common import task_groups
-import tasks.packages
+from bootstrapvz.providers.hyperv.tasks import packages
 from bootstrapvz.common.tasks import image
 from bootstrapvz.common.tasks import loopback
 from bootstrapvz.common.tasks import initd
@@ -16,7 +16,7 @@ def validate_manifest(data, validator, error):
 def resolve_tasks(taskset, manifest):
 	taskset.update(task_groups.get_standard_groups(manifest))
 	taskset.update([apt.AddBackports,
-	                tasks.packages.DefaultPackages,
+	                packages.DefaultPackages,
 	                loopback.AddRequiredCommands,
 	                loopback.Create,
 	                image.MoveImage,

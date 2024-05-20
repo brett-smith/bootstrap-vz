@@ -38,17 +38,17 @@ links_mapping = {
     r'^CHANGELOG\.rst$': r'changelog.html',
 }
 
-for key, val in includes_mapping.items():
+for key, val in list(includes_mapping.items()):
     del includes_mapping[key]
     includes_mapping[re.compile(key)] = val
 
-for key, val in links_mapping.items():
+for key, val in list(links_mapping.items()):
     del links_mapping[key]
     links_mapping[re.compile(key)] = val
 
 
 def find_original(path):
-    for key, val in includes_mapping.items():
+    for key, val in list(includes_mapping.items()):
         if re.match(key, path):
             return re.sub(key, val, path)
     return None
@@ -62,7 +62,7 @@ def find_docs_link(link):
     except ValueError:
         # No anchor, keep the original link
         anchor = ''
-    for key, val in links_mapping.items():
+    for key, val in list(links_mapping.items()):
         if re.match(key, link):
             return re.sub(key, val, link) + anchor
     return None

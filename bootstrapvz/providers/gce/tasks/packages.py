@@ -22,7 +22,7 @@ class DefaultPackages(Task):
         info.packages.add('lsb-release')
         info.packages.add('ntp')
         info.packages.add('parted')
-        info.packages.add('python')
+        info.packages.add('python3')
         info.packages.add('openssh-client')
         info.packages.add('openssh-server')
         info.packages.add('sudo')

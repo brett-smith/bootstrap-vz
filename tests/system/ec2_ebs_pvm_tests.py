@@ -20,7 +20,7 @@ def test_unpartitioned_oldstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_oldstable():
@@ -29,7 +29,7 @@ def test_msdos_oldstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_oldstable():
@@ -38,7 +38,7 @@ def test_gpt_oldstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_unpartitioned_stable():
@@ -47,7 +47,7 @@ def test_unpartitioned_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_stable():
@@ -56,7 +56,7 @@ def test_msdos_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_stable():
@@ -65,7 +65,7 @@ def test_gpt_stable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_unpartitioned_unstable():
@@ -74,7 +74,7 @@ def test_unpartitioned_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_msdos_unstable():
@@ -83,7 +83,7 @@ def test_msdos_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))
 
 
 def test_gpt_unstable():
@@ -92,4 +92,4 @@ def test_gpt_unstable():
     manifest_data = merge_manifest_data(std_partials, custom_partials)
     boot_vars = {'instance_type': 't1.micro'}
     with boot_manifest(manifest_data, boot_vars) as instance:
-        print(instance.get_console_output().output)
+        print((instance.get_console_output().output))

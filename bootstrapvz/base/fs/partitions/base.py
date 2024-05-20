@@ -84,7 +84,8 @@ class BasePartition(AbstractPartition):
         # $GRUB_DEVICE_UUID when creating /boot/grub/grub.cfg
         self.disk_by_uuid_path = os.path.join('/dev/disk/by-uuid', self.get_uuid())
         if not os.path.exists(self.disk_by_uuid_path):
-            os.makedirs(os.path.dirname(self.disk_by_uuid_path))
+            if not os.path.exists(os.path.dirname(self.disk_by_uuid_path)):
+                os.makedirs(os.path.dirname(self.disk_by_uuid_path))
             os.symlink(self.device_path, self.disk_by_uuid_path)
 
     def unlink_uuid(self):

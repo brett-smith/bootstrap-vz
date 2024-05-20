@@ -34,8 +34,8 @@ class LaunchEC2Instance(Task):
 
         if 'tags' in info.manifest.plugins['ec2_launch']:
             raw_tags = info.manifest.plugins['ec2_launch']['tags']
-            formatted_tags = {k: v.format(**info.manifest_vars) for k, v in raw_tags.items()}
-            tags = [{'Key': k, 'Value': v} for k, v in formatted_tags.items()]
+            formatted_tags = {k: v.format(**info.manifest_vars) for k, v in list(raw_tags.items())}
+            tags = [{'Key': k, 'Value': v} for k, v in list(formatted_tags.items())]
             conn.create_tags(Resources=[info._ec2['instance']['InstanceId']],
                              Tags=tags)
 

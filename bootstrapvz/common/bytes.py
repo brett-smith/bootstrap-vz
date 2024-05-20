@@ -21,7 +21,7 @@ class Bytes(object):
              }
 
     def __init__(self, qty):
-        if isinstance(qty, (int, long)):
+        if isinstance(qty, int):
             self.qty = qty
         else:
             self.qty = Bytes.parse(qty)
@@ -49,7 +49,7 @@ class Bytes(object):
         if self.qty % Bytes.units[unit] != 0:
             msg = 'Unable to convert {qty} bytes to a whole number in {unit}'.format(qty=self.qty, unit=unit)
             raise UnitError(msg)
-        return self.qty / Bytes.units[unit]
+        return int(self.qty / Bytes.units[unit])
 
     def __repr__(self):
         converted = str(self.get_qty_in('B')) + 'B'
@@ -115,12 +115,12 @@ class Bytes(object):
         return self
 
     def __mul__(self, other):
-        if not isinstance(other, (int, long)):
+        if not isinstance(other, int):
             raise UnitError('Can only multiply Bytes with integers')
         return Bytes(self.qty * other)
 
     def __imul__(self, other):
-        if not isinstance(other, (int, long)):
+        if not isinstance(other, int):
             raise UnitError('Can only multiply Bytes with integers')
         self.qty *= other
         return self
@@ -128,7 +128,14 @@ class Bytes(object):
     def __div__(self, other):
         if isinstance(other, Bytes):
             return self.qty / other.qty
-        if not isinstance(other, (int, long)):
+        if not isinstance(other, int):
+            raise UnitError('Can only divide Bytes with integers or Bytes')
+        return Bytes(self.qty / other)
+
+    def __truediv__(self, other):
+        if isinstance(other, Bytes):
+            return self.qty / other.qty
+        if not isinstance(other, int):
             raise UnitError('Can only divide Bytes with integers or Bytes')
         return Bytes(self.qty / other)
 
@@ -136,7 +143,7 @@ class Bytes(object):
         if isinstance(other, Bytes):
             self.qty /= other.qty
         else:
-            if not isinstance(other, (int, long)):
+            if not isinstance(other, int):
                 raise UnitError('Can only divide Bytes with integers or Bytes')
             self.qty /= other
         return self

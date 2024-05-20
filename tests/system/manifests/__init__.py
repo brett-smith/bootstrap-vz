@@ -3,6 +3,7 @@ import glob
 import random
 import string
 from bootstrapvz.common.tools import load_data
+from functools import reduce
 
 partial_json = glob.glob(os.path.join(os.path.dirname(__file__), '*.yml'))
 partial_yaml = glob.glob(os.path.join(os.path.dirname(__file__), '*.json'))
@@ -32,7 +33,7 @@ def merge_dicts(*args):
     def clone(obj):
         copy = obj
         if isinstance(obj, dict):
-            copy = {key: clone(value) for key, value in obj.iteritems()}
+            copy = {key: clone(value) for key, value in obj.items()}
         if isinstance(obj, list):
             copy = [clone(value) for value in obj]
         if isinstance(obj, set):

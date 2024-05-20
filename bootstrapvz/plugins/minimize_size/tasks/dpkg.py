@@ -54,8 +54,8 @@ class CreateBootstrapFilterScripts(Task):
         # The pattern matching when excluding is needed in order to filter
         # everything below e.g. /usr/share/locale but not the folder itself
         filter_lists = info._minimize_size['bootstrap_filter']
-        exclude_list = r'\|'.join(map(lambda p: '.' + p + r'.\+', filter_lists['exclude']))
-        include_list = '\n'.join(map(lambda p: '.' + p, filter_lists['include']))
+        exclude_list = r'\|'.join(['.' + p + r'.\+' for p in filter_lists['exclude']])
+        include_list = '\n'.join(['.' + p for p in filter_lists['include']])
         sed_i(filter_script, r'EXCLUDE_PATTERN', exclude_list)
         sed_i(filter_script, r'INCLUDE_PATHS', include_list)
         os.chmod(filter_script, 0o755)
@@ -95,8 +95,8 @@ class FilterLocales(Task):
             '/usr/share/man/man8',
             '/usr/share/man/man9',
         ] +
-            map(lambda l: '/usr/share/locale/' + l + '/', locales) +
-            map(lambda l: '/usr/share/man/' + l + '/', locales)
+            ['/usr/share/locale/' + l + '/' for l in locales] +
+            ['/usr/share/man/' + l + '/' for l in locales]
         )
 
         # Filter when installing things with dpkg
@@ -106,8 +106,8 @@ class FilterLocales(Task):
                           'path-include=/usr/share/man/man[1-9]']
 
         locales = info.manifest.plugins['minimize_size']['dpkg']['locales']
-        locale_lines.extend(map(lambda l: 'path-include=/usr/share/locale/' + l + '/*', locales))
-        manpages_lines.extend(map(lambda l: 'path-include=/usr/share/man/' + l + '/*', locales))
+        locale_lines.extend(['path-include=/usr/share/locale/' + l + '/*' for l in locales])
+        manpages_lines.extend(['path-include=/usr/share/man/' + l + '/*' for l in locales])
 
         locales_path = os.path.join(info.root, 'etc/dpkg/dpkg.cfg.d/10filter-locales')
         manpages_path = os.path.join(info.root, 'etc/dpkg/dpkg.cfg.d/10filter-manpages')

@@ -135,7 +135,7 @@ class RegisterAMI(Task):
         # Setting up tags on the AMI
         if 'tags' in info.manifest.data:
             raw_tags = info.manifest.data['tags']
-            formatted_tags = {k: v.format(**info.manifest_vars) for k, v in raw_tags.items()}
-            tags = [{'Key': k, 'Value': v} for k, v in formatted_tags.items()]
+            formatted_tags = {k: v.format(**info.manifest_vars) for k, v in list(raw_tags.items())}
+            tags = [{'Key': k, 'Value': v} for k, v in list(formatted_tags.items())]
             info._ec2['connection'].create_tags(Resources=[info._ec2['image']['ImageId']],
                                                 Tags=tags)

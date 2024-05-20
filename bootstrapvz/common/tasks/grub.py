@@ -208,7 +208,7 @@ class WriteGrubConfig(Task):
 # legal notices and disclaimers.
 
 """
-        for key, value in info.grub_config.items():
+        for key, value in list(info.grub_config.items()):
             if isinstance(value, str):
                 grub_config_contents += '{}="{}"\n'.format(key, value)
             elif isinstance(value, int):

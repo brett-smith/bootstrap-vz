@@ -5,6 +5,24 @@ class _Release(object):
         self.codename = codename
         self.version = version
 
+    def __lt__(self, other):
+        return self.version < other.version
+
+    def __gt__(self, other):
+        return self.version > other.version
+        
+    def __ge__(self, other):
+        return self.version >= other.version
+        
+    def __ne__(self, other):
+        return self.version != other.version
+        
+    def __eq__(self, other):
+        return self.version == other.version
+
+    def __le__(self, other):
+        return self.version <= other.version
+
     def __cmp__(self, other):
         return self.version - other.version
 

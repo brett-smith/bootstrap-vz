@@ -1,4 +1,4 @@
-import tasks
+from . import tasks
 from bootstrapvz.common import task_groups
 from bootstrapvz.common.tasks import image
 from bootstrapvz.common.tasks import ssh

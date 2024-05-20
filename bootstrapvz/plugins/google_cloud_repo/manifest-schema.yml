@@ -8,8 +8,4 @@ properties:
     properties:
       google_cloud_repo:
         type: object
-        properties:
-          cleanup_bootstrap_key: {type: boolean}
-          enable_keyring_repo: {type: boolean}
-          repository_suffix: {type: string}
         additionalProperties: false

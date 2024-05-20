@@ -107,8 +107,8 @@ class InstallEnhancedNetworking(Task):
         archive = os.path.join(info.root, 'tmp', 'ixgbevf-%s.tar.gz' % (version))
         module_path = os.path.join(info.root, 'usr', 'src', 'ixgbevf-%s' % (version))
 
-        import urllib
-        urllib.urlretrieve(drivers_url, archive)
+        import urllib.request, urllib.parse, urllib.error
+        urllib.request.urlretrieve(drivers_url, archive)
 
         from bootstrapvz.common.tools import log_check_call
         log_check_call(['tar', '--ungzip',
@@ -153,8 +153,8 @@ class InstallENANetworking(Task):
                                    'amzn-drivers-%s' % (version))
         archive = os.path.join(info.root, 'tmp', 'amzn-drivers-%s.tar.gz' % (version))
 
-        import urllib
-        urllib.urlretrieve(drivers_url, archive)
+        import urllib.request, urllib.parse, urllib.error
+        urllib.request.urlretrieve(drivers_url, archive)
 
         from bootstrapvz.common.tools import log_check_call
         log_check_call(['tar', '--ungzip',

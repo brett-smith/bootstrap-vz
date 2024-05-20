@@ -14,7 +14,7 @@ class EBSImage(AmazonMachineImage):
     def destroy(self):
         log.debug('Deleting AMI')
         self.ami.deregister()
-        for device, block_device_type in self.ami.block_device_mapping.items():
+        for device, block_device_type in list(self.ami.block_device_mapping.items()):
             self.ec2_connection.delete_snapshot(block_device_type.snapshot_id)
         del self.ami
 

@@ -64,7 +64,7 @@ class Manifest(object):
         # Run through all the plugins mentioned in the manifest and load them
         from pkg_resources import iter_entry_points
         if 'plugins' in self.data:
-            for plugin_name in self.data['plugins'].keys():
+            for plugin_name in list(self.data['plugins'].keys()):
                 log.debug('Loading plugin ' + plugin_name)
                 try:
                     # Internal bootstrap-vz plugins take precedence wrt. plugin name

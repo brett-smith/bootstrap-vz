@@ -7,5 +7,4 @@ def validate_manifest(data, validator, error):
 
 
 def resolve_tasks(taskset, manifest):
-    taskset.add(tasks.AddGoogleComputeEngineInitRepos)
     taskset.add(tasks.InstallGoogleComputeEngineInitPackages)

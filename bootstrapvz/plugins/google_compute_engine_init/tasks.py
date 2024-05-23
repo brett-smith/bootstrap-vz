@@ -22,5 +22,5 @@ class InstallGoogleComputeEngineInitPackages(Task):
 
     @classmethod
     def run(cls, info):
-        info.packages.add('google-compute-engine')
+        info.packages.add('google-guest-agent')
 

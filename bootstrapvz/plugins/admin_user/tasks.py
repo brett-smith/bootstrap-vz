@@ -74,9 +74,12 @@ class AdminUserPassword(Task):
     @classmethod
     def run(cls, info):
         from bootstrapvz.common.tools import log_check_call
-        log_check_call(['chroot', info.root, 'chpasswd'],
-                       info.manifest.plugins['admin_user']['username'] +
-                       ':' + info.manifest.plugins['admin_user']['password'])
+        if info.manifest.plugins['admin_user']['password'] == '':
+            log_check_call(['chroot', info.root, 'passwd', '-d', info.manifest.plugins['admin_user']['username']])
+        else:
+            log_check_call(['chroot', info.root, 'chpasswd'],
+                           info.manifest.plugins['admin_user']['username'] +
+                           ':' + info.manifest.plugins['admin_user']['password'])
 
 
 class AdminUserPublicKey(Task):

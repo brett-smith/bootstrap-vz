@@ -20,6 +20,9 @@ bullseye: |
 bookworm: |
   auto eth0
   iface eth0 inet dhcp
+trixie: |
+  auto eth0
+  iface eth0 inet dhcp
 sid: |
   auto eth0
   iface eth0 inet dhcp

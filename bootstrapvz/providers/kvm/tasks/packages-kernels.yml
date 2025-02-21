@@ -19,5 +19,8 @@ bullseye:
 bookworm:
   amd64: linux-image-amd64
   arm64: linux-image-arm64
+trixie:
+  amd64: linux-image-amd64
+  arm64: linux-image-arm64
 sid:
   amd64: linux-image-amd64

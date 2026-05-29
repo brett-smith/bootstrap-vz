@@ -97,6 +97,7 @@ class BasePartition(AbstractPartition):
         """Creates the partition
         """
         from bootstrapvz.common.tools import log_check_call
+        from bootstrapvz.common.tools import log_call
         # The create command is fairly simple:
         # - fs_type is the partition filesystem, as defined by parted:
         #   fs-type can be one of "fat16", "fat32", "ext2", "HFS", "linux-swap",

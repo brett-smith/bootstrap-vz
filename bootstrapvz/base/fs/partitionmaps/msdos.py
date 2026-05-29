@@ -3,6 +3,7 @@ from ..exceptions import PartitionError
 from ..partitions.msdos import MSDOSPartition
 from ..partitions.msdos_swap import MSDOSSwapPartition
 from bootstrapvz.common.tools import log_check_call
+from bootstrapvz.common.tools import log_call
 
 
 class MSDOSPartitionMap(AbstractPartitionMap):
@@ -87,7 +88,7 @@ class MSDOSPartitionMap(AbstractPartitionMap):
         volume = event.volume
         # Disk alignment still plays a role in virtualized environment,
         # but I honestly have no clue as to what best practice is here, so we choose 'none'
-        log_check(['parted', '--script', '--align', 'none', volume.device_path,
+        log_call(['parted', '--script', '--align', 'none', volume.device_path,
                         '--', 'mklabel', 'msdos'])
         # Create the partitions
         for partition in self.partitions:

@@ -10,6 +10,8 @@ def log_check_call(command, stdin=None, env=None, shell=False, cwd=None):
         # Fix Pyro4's fixIronPythonExceptionForPickle() by setting the args property,
         # even though we use our own serialization (at least I think that's the problem).
         # See bootstrapvz.remote.serialize_called_process_error for more info.
+        print('Command {command} failed with status {status}'.format(command=' '.join(command), status=status))
+        
         setattr(e, 'args', (status, ' '.join(command), '\n'.join(stderr)))
         raise e
     return stdout

@@ -3,10 +3,11 @@ from bootstrapvz.base import Task
 from bootstrapvz.common import phases
 from bootstrapvz.common.tasks import apt
 from bootstrapvz.common.exceptions import TaskError
-from bootstrapvz.common.releases import jessie, wheezy, stretch, buster, bullseye,bookworm
+from bootstrapvz.common.releases import jessie, wheezy, stretch, buster, bullseye, bookworm, trixie
 from bootstrapvz.common.tools import sed_i, log_check_call, rel_path
 
 
+ASSETS_DIR_TRIXIE = rel_path(__file__, 'assets/gpg-keyrings-PC1/trixie')
 ASSETS_DIR_BOOKWORM = rel_path(__file__, 'assets/gpg-keyrings-PC1/bullseye')
 ASSETS_DIR_BULLSEYE = rel_path(__file__, 'assets/gpg-keyrings-PC1/bullseye')
 ASSETS_DIR_BUSTER = rel_path(__file__, 'assets/gpg-keyrings-PC1/buster')
@@ -21,7 +22,7 @@ class CheckRequestedDebianRelease(Task):
 
     @classmethod
     def run(cls, info):
-        if info.manifest.release not in (jessie, wheezy, stretch, buster, bullseye, bookworm):
+        if info.manifest.release not in (jessie, wheezy, stretch, buster, bullseye, bookworm, trixie):
             msg = 'Debian {info.manifest.release} is not (yet) available in the Puppetlabs.com APT repository.'
             raise TaskError(msg)
 
@@ -66,6 +67,8 @@ class InstallPuppetlabsPC1ReleaseKey(Task):
     @classmethod
     def run(cls, info):
         from shutil import copy
+        if (info.manifest.release == trixie):
+            key_path = os.path.join(ASSETS_DIR_TRIXIE, 'puppetlabs-pc1-keyring.gpg')
         if (info.manifest.release == bookworm):
             key_path = os.path.join(ASSETS_DIR_BOOKWORM, 'puppetlabs-pc1-keyring.gpg')
         if (info.manifest.release == bullseye):
@@ -88,6 +91,8 @@ class AddPuppetlabsPC1SourcesList(Task):
 
     @classmethod
     def run(cls, info):
+        if (info.manifest.release == trixie):
+            info.source_lists.add('puppetlabs', 'deb http://apt.puppetlabs.com trixie PC1')
         if (info.manifest.release == bookworm):
             info.source_lists.add('puppetlabs', 'deb http://apt.puppetlabs.com bookworm PC1')
         if (info.manifest.release == bullseye):

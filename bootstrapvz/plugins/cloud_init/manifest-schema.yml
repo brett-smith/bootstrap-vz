@@ -17,6 +17,7 @@ properties:
         - buster
         - bullseye
         - bookworm
+        - trixie
         - testing
         - sid
         - unstable

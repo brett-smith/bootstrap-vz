@@ -111,12 +111,12 @@ class BasePartition(AbstractPartition):
                                   start=str(self.get_start() + self.pad_start),
                                   end=str(self.get_end() - self.pad_end)))
         # Create the partition
-        log_check_call(['parted', '--script', '--align', 'none', e.volume.device_path,
+        log_call(['parted', '--script', '--align', 'none', e.volume.device_path,
                         '--', create_command])
 
         # Set any flags on the partition
         for flag in self.flags:
-            log_check_call(['parted', '--script', e.volume.device_path,
+            log_call(['parted', '--script', e.volume.device_path,
                             '--', ('set {idx} {flag} on'
                                    .format(idx=str(self.get_index()), flag=flag))])
 

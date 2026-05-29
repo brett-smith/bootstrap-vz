@@ -87,7 +87,7 @@ class MSDOSPartitionMap(AbstractPartitionMap):
         volume = event.volume
         # Disk alignment still plays a role in virtualized environment,
         # but I honestly have no clue as to what best practice is here, so we choose 'none'
-        log_check_call(['parted', '--script', '--align', 'none', volume.device_path,
+        log_check(['parted', '--script', '--align', 'none', volume.device_path,
                         '--', 'mklabel', 'msdos'])
         # Create the partitions
         for partition in self.partitions:

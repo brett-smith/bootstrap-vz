@@ -48,11 +48,17 @@ class QEMUVolume(LoopbackVolume):
         self.loop_device_path = self._find_free_nbd_device()
         log_check_call(['qemu-nbd', '-f', self.qemu_format, '--connect', self.loop_device_path, self.image_path])
         self.device_path = self.loop_device_path
+        
+        # Sleep for a bit to make sure the volume is ready for partitioning. This is a workaround for an issue where the volume is not immediately ready after being created.
+        log_check_call(['sleep', '2'])
 
     def _before_detach(self, e):
         log_check_call(['qemu-nbd', '--disconnect', self.loop_device_path])
         del self.loop_device_path
         self.device_path = None
+        
+        # Sleep for a bit to make sure the volume is ready for partitioning. This is a workaround for an issue where the volume is not immediately ready after being created.
+        log_check_call(['sleep', '2'])
 
     def _module_loaded(self, module):
         import re

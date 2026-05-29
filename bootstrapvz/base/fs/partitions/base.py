@@ -97,7 +97,6 @@ class BasePartition(AbstractPartition):
         """Creates the partition
         """
         from bootstrapvz.common.tools import log_check_call
-        from bootstrapvz.common.tools import log_call
         # The create command is fairly simple:
         # - fs_type is the partition filesystem, as defined by parted:
         #   fs-type can be one of "fat16", "fat32", "ext2", "HFS", "linux-swap",
@@ -111,13 +110,14 @@ class BasePartition(AbstractPartition):
                           .format(fs_type=fs_type,
                                   start=str(self.get_start() + self.pad_start),
                                   end=str(self.get_end() - self.pad_end)))
+                                  
         # Create the partition
-        log_call(['parted', '--script', '--align', 'none', e.volume.device_path,
+        log_check_call(['parted', '--script', '--align', 'none', e.volume.device_path,
                         '--', create_command])
 
         # Set any flags on the partition
         for flag in self.flags:
-            log_call(['parted', '--script', e.volume.device_path,
+            log_check_call(['parted', '--script', e.volume.device_path,
                             '--', ('set {idx} {flag} on'
                                    .format(idx=str(self.get_index()), flag=flag))])
 

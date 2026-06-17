@@ -203,7 +203,7 @@ class AptUpdate(Task):
     @classmethod
     def run(cls, info):
         log_check_call(['chroot', info.root,
-                        'apt-get', 'update'])
+                        'apt-get', 'update', '-o', 'APT::Key::GPGVCommand=1'])
 
 
 class AptUpgrade(Task):
